@@ -178,7 +178,7 @@ main:
 ;     printScore()
     JSR printScore
 ; 
-;line:65:sieve1899.mfk
+;line:66:sieve1899.mfk
 ;     while true {}
 .wh__00027:
     JMP .wh__00027
