@@ -56,7 +56,7 @@ main:
     STA $E9
 ; 
 ;line:24:chessboard.mfk
-;       SDMCTL = dl.addr
+;       SDLSTL = dl.addr
     LDA #lo(printScore$dl)
     STA $230
     LDA #hi(printScore$dl)
@@ -136,7 +136,7 @@ drawBoard:
     STA $E9
 ; 
 ;line:72:chessboard.mfk
-;       SDMCTL = dl.addr
+;       SDLSTL = dl.addr
     LDA #lo(drawBoard$dl)
     STA $230
     LDA #hi(drawBoard$dl)
@@ -288,9 +288,9 @@ printScore$dl.array:
 .wh__00022                     = $1010
 .wh__00026                     = $1059
 RTCLOK                         = $0014
-SDMCTL                         = $0230
-SDMCTL.hi                      = $0231
-SDMCTL.lo                      = $0230
+SDLSTL                         = $0230
+SDLSTL.hi                      = $0231
+SDLSTL.lo                      = $0230
 __heap_start                   = $1000
 __reg                          = $0080
 __rwdata_end                   = $0000
@@ -335,9 +335,9 @@ segment.default.start          = $11A2
     ; $00E9 = __zeropage_last
     ; $00E9 = screen.hi
     ; $00EA = __zeropage_end
-    ; $0230 = SDMCTL
-    ; $0230 = SDMCTL.lo
-    ; $0231 = SDMCTL.hi
+    ; $0230 = SDLSTL
+    ; $0230 = SDLSTL.lo
+    ; $0231 = SDLSTL.hi
     ; $1000 = __heap_start
     ; $1000 = main
     ; $1000 = segment.default.heapstart

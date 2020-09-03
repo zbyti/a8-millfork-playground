@@ -1,4 +1,4 @@
-word SDMCTL @ $230
+word SDLSTL @ $230
 byte RTCLOK @ $14
 byte i@$e0, j@$e2, k@$e4, count@$e6
 pointer screen@$e8
@@ -21,7 +21,7 @@ void printScore() {
 	byte iter
 
 	screen = $8400
-	SDMCTL = dl.addr
+	SDLSTL = dl.addr
 
 	tmp[0] = count >> 4
 	tmp[1] = count & %00001111
@@ -69,7 +69,7 @@ void drawBoard() {
 	]
 
 	screen = $6010
-	SDMCTL = dl.addr
+	SDLSTL = dl.addr
 
 	for i,7,downto,0 {
 		for j,23,downto,0 {
