@@ -95,7 +95,7 @@ void main() {
 	pause()
 	RTCLOK = 0
 
-	while RTCLOK  < 150 {
+	while RTCLOK < 150 {
 		drawBoard()
 		count += 1
 	}
