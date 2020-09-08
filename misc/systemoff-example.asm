@@ -2,33 +2,33 @@
 * = $2000
 main:
 ; 
-;line:3:systemoff.mfk
+;line:3:systemoff-example.mfk
 ;     asm { sei }
     SEI
 ; 
-;line:4:systemoff.mfk
+;line:4:systemoff-example.mfk
 ;     antic_nmien = 0
     LDA #0
     STA $D40E
 ; 
-;line:5:systemoff.mfk
+;line:5:systemoff-example.mfk
 ;     pia_portb = $fe
     LDA #$FE
     STA $D301
 ; 
-;line:6:systemoff.mfk
+;line:6:systemoff-example.mfk
 ;     os_NMIVEC = interrupt_check.addr
     LDA #lo(interrupt_check)
     STA $FFFA
     LDA #hi(interrupt_check)
     STA $FFFB
 ; 
-;line:7:systemoff.mfk
+;line:7:systemoff-example.mfk
 ;     antic_nmien = $40
     LDA #$40
     STA $D40E
 ; 
-;line:28:systemoff.mfk
+;line:28:systemoff-example.mfk
 ;     while(true){}
 .wh__00001:
     BNE .wh__00001
@@ -38,15 +38,15 @@ main:
 * = $201c
 interrupt_check:
 ; 
-;line:11:systemoff.mfk
-;     bit antic_nmires
+;line:11:systemoff-example.mfk
+;     bit antic_nmist
     BIT $D40F
 ; 
-;line:12:systemoff.mfk
+;line:12:systemoff-example.mfk
 ;     bpl vbl.addr
     BPL vbl.addr
 ; 
-;line:13:systemoff.mfk
+;line:13:systemoff-example.mfk
 ;     rti
     RTI
 ; 
@@ -55,31 +55,31 @@ interrupt_check:
 * = $2022
 vbl:
 ; 
-;line:17:systemoff.mfk
+;line:17:systemoff-example.mfk
 ;     inc os_RTCLOK.b2
     INC $14
 ; 
-;line:18:systemoff.mfk
+;line:18:systemoff-example.mfk
 ;     bne end
     BNE end
 ; 
-;line:19:systemoff.mfk
+;line:19:systemoff-example.mfk
 ;     inc os_RTCLOK.b1
     INC $13
 ; 
-;line:20:systemoff.mfk
+;line:20:systemoff-example.mfk
 ;     bne end
     BNE end
 ; 
-;line:21:systemoff.mfk
+;line:21:systemoff-example.mfk
 ;     inc os_RTCLOK.b0
     INC $12
 ; 
-;line:22:systemoff.mfk
+;line:22:systemoff-example.mfk
 ;     end:
 end:
 ; 
-;line:23:systemoff.mfk
+;line:23:systemoff-example.mfk
 ;     rti
     RTI
 ; 
@@ -101,6 +101,7 @@ antic_dmactl                   = $D400
 antic_hscrol                   = $D404
 antic_nmien                    = $D40E
 antic_nmires                   = $D40F
+antic_nmist                    = $D40F
 antic_penh                     = $D40C
 antic_penv                     = $D40D
 antic_pmbase                   = $D407
@@ -558,6 +559,9 @@ os_SAVMSC.lo                   = $0058
 os_SCRENV.array                = $E410
 os_SCRENV.first                = $E410
 os_SCRFLG                      = $02BB
+os_SDLST                       = $0230
+os_SDLST.hi                    = $0231
+os_SDLST.lo                    = $0230
 os_SDLSTH                      = $0231
 os_SDLSTL                      = $0230
 os_SDMCTL                      = $022F
@@ -976,7 +980,10 @@ vbl                            = $2022
     ; $022D = os_INTEMP
     ; $022E = os_CDTMF5
     ; $022F = os_SDMCTL
+    ; $0230 = os_SDLST
+    ; $0230 = os_SDLST.lo
     ; $0230 = os_SDLSTL
+    ; $0231 = os_SDLST.hi
     ; $0231 = os_SDLSTH
     ; $0232 = os_SSKCTL
     ; $0233 = os_LCOUNT
@@ -1340,6 +1347,7 @@ vbl                            = $2022
     ; $D40D = antic_penv
     ; $D40E = antic_nmien
     ; $D40F = antic_nmires
+    ; $D40F = antic_nmist
     ; $E000 = os_DCSORG.array
     ; $E000 = os_DCSORG.first
     ; $E400 = os_EDITRV.array

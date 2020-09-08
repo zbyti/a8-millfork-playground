@@ -7,15 +7,13 @@ const array(byte) dl @ dlAddr = [
   $41,lo(dlAddr),hi(dlAddr)
 ]
 
-volatile word SDLST @ $230
-
 interrupt void dli() @ dliAddr {
   gtia_colpf2 = $de
   antic_wsync = 1
 }
 
 void main() {
-  SDLST = dl.addr
+  os_SDLST = dl.addr
   os_VDSLST = dli.addr
   antic_nmien = $c0
 

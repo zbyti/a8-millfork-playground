@@ -7,12 +7,12 @@ dli:
     TYA 
     PHA 
 ; 
-;line:13:dli-example.mfk
+;line:11:dli-example.mfk
 ;     gtia_colpf2 = $de
     LDA #$DE
     STA $D018
 ; 
-;line:14:dli-example.mfk
+;line:12:dli-example.mfk
 ;     antic_wsync = 1
     LDA #1
     STA $D40A
@@ -23,28 +23,28 @@ dli:
 ;line
     LDA __reg + 3
 ; 
-;line:14:dli-example.mfk
+;line:12:dli-example.mfk
 ;     antic_wsync = 1
     STA __reg + 3
 ; 
 ;line
     LDA __reg + 2
 ; 
-;line:14:dli-example.mfk
+;line:12:dli-example.mfk
 ;     antic_wsync = 1
     STA __reg + 2
 ; 
 ;line
     LDA __reg + 1
 ; 
-;line:14:dli-example.mfk
+;line:12:dli-example.mfk
 ;     antic_wsync = 1
     STA __reg + 1
 ; 
 ;line
     LDA __reg
 ; 
-;line:14:dli-example.mfk
+;line:12:dli-example.mfk
 ;     antic_wsync = 1
     STA __reg
     PLA
@@ -63,35 +63,32 @@ dl.array:
 * = $2000
 main:
 ; 
-;line:18:dli-example.mfk
-;     SDLST = dl.addr
+;line:16:dli-example.mfk
+;     os_SDLST = dl.addr
     LDA #lo(dl)
     STA $230
     LDA #hi(dl)
     STA $231
 ; 
-;line:19:dli-example.mfk
+;line:17:dli-example.mfk
 ;     os_VDSLST = dli.addr
     LDA #0
     STA $200
     LDA #$31
     STA $201
 ; 
-;line:20:dli-example.mfk
+;line:18:dli-example.mfk
 ;     antic_nmien = $c0
     LDA #$C0
     STA $D40E
 ; 
-;line:22:dli-example.mfk
+;line:20:dli-example.mfk
 ;     while true {}
 .wh__00001:
     BNE .wh__00001
 ; 
 ;line
 .wh__00001                     = $2019
-SDLST                          = $0230
-SDLST.hi                       = $0231
-SDLST.lo                       = $0230
 __heap_start                   = $2000
 __reg                          = $0080
 __rwdata_end                   = $0000
@@ -108,6 +105,7 @@ antic_dmactl                   = $D400
 antic_hscrol                   = $D404
 antic_nmien                    = $D40E
 antic_nmires                   = $D40F
+antic_nmist                    = $D40F
 antic_penh                     = $D40C
 antic_penv                     = $D40D
 antic_pmbase                   = $D407
@@ -566,6 +564,9 @@ os_SAVMSC.lo                   = $0058
 os_SCRENV.array                = $E410
 os_SCRENV.first                = $E410
 os_SCRFLG                      = $02BB
+os_SDLST                       = $0230
+os_SDLST.hi                    = $0231
+os_SDLST.lo                    = $0230
 os_SDLSTH                      = $0231
 os_SDLSTL                      = $0230
 os_SDMCTL                      = $022F
@@ -983,10 +984,10 @@ segment.default.start          = $201B
     ; $022D = os_INTEMP
     ; $022E = os_CDTMF5
     ; $022F = os_SDMCTL
-    ; $0230 = SDLST
-    ; $0230 = SDLST.lo
+    ; $0230 = os_SDLST
+    ; $0230 = os_SDLST.lo
     ; $0230 = os_SDLSTL
-    ; $0231 = SDLST.hi
+    ; $0231 = os_SDLST.hi
     ; $0231 = os_SDLSTH
     ; $0232 = os_SSKCTL
     ; $0233 = os_LCOUNT
@@ -1350,6 +1351,7 @@ segment.default.start          = $201B
     ; $D40D = antic_penv
     ; $D40E = antic_nmien
     ; $D40F = antic_nmires
+    ; $D40F = antic_nmist
     ; $E000 = os_DCSORG.array
     ; $E000 = os_DCSORG.first
     ; $E400 = os_EDITRV.array

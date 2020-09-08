@@ -8,7 +8,7 @@ void system_off(){
 }
 
 asm void interrupt_check(){
-  bit antic_nmires
+  bit antic_nmist
   bpl vbl.addr
   rti
 }

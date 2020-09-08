@@ -5,35 +5,35 @@ dl.array:
 * = $2000
 main:
 ; 
-;line:32:endless_scroll.mfk
+;line:30:endless_scroll.mfk
 ;     hscroli = $f
     LDA #$F
     STA $80
 ; 
-;line:33:endless_scroll.mfk
+;line:31:endless_scroll.mfk
 ;     screeni = lms1Addr
     LDA #0
     STA $82
     LDA #$40
     STA $83
 ; 
-;line:35:endless_scroll.mfk
+;line:33:endless_scroll.mfk
 ;     wait(1)
     LDA #1
     JSR wait
 ; 
-;line:36:endless_scroll.mfk
-;     SDLST = dl.addr
+;line:34:endless_scroll.mfk
+;     os_SDLST = dl.addr
     LDA #lo(dl)
     STA $230
     LDA #hi(dl)
     STA $231
 ; 
-;line:38:endless_scroll.mfk
+;line:36:endless_scroll.mfk
 ;     while true {
 .wh__00001:
 ; 
-;line:39:endless_scroll.mfk
+;line:37:endless_scroll.mfk
 ;       if hscroli == $b {
     LDA $80
     CMP #$B
@@ -41,14 +41,14 @@ main:
 ;line
     BEQ .lj80000
 ; 
-;line:39:endless_scroll.mfk
+;line:37:endless_scroll.mfk
 ;       if hscroli == $b {
     JMP .fi__00010
 ; 
 ;line
 .lj80000:
 ; 
-;line:40:endless_scroll.mfk
+;line:38:endless_scroll.mfk
 ;         a = (pokey_random & 15) + 33
     LDA $D20A
     AND #$F
@@ -56,7 +56,7 @@ main:
     ADC #$21
     STA main$a
 ; 
-;line:41:endless_scroll.mfk
+;line:39:endless_scroll.mfk
 ;         b = (pokey_random & 15) + 33
     LDA $D20A
     AND #$F
@@ -64,7 +64,7 @@ main:
     ADC #$21
     TAX
 ; 
-;line:42:endless_scroll.mfk
+;line:40:endless_scroll.mfk
 ;         c = (pokey_random & 15) + 33
     LDA $D20A
     AND #$F
@@ -72,71 +72,71 @@ main:
     ADC #$21
     STA main$c
 ; 
-;line:44:endless_scroll.mfk
+;line:42:endless_scroll.mfk
 ;         screeni[0] = a
     LDA main$a
     LDY #0
     STA ($82), Y
 ; 
-;line:45:endless_scroll.mfk
+;line:43:endless_scroll.mfk
 ;         screeni[$60] = b
     TXA
     LDY #$60
     STA ($82), Y
 ; 
-;line:46:endless_scroll.mfk
+;line:44:endless_scroll.mfk
 ;         screeni[$c0] = c
     LDA main$c
     LDY #$C0
     STA ($82), Y
 ; 
-;line:48:endless_scroll.mfk
+;line:46:endless_scroll.mfk
 ;         screeni[$30] = a
     LDA main$a
     LDY #$30
     STA ($82), Y
 ; 
-;line:49:endless_scroll.mfk
+;line:47:endless_scroll.mfk
 ;         screeni[$30 + $60] = b
     TXA
     LDY #$90
     STA ($82), Y
 ; 
-;line:50:endless_scroll.mfk
+;line:48:endless_scroll.mfk
 ;         screeni[$30 + $c0] = c
     LDA main$c
     LDY #$F0
     STA ($82), Y
 ; 
-;line:52:endless_scroll.mfk
+;line:50:endless_scroll.mfk
 ;         lms1 += 1
     INC $3004
     BNE .in__00005
     INC $3005
 .in__00005:
 ; 
-;line:53:endless_scroll.mfk
+;line:51:endless_scroll.mfk
 ;         lms2 += 1
     INC $3007
     BNE .in__00006
     INC $3008
 .in__00006:
 ; 
-;line:54:endless_scroll.mfk
+;line:52:endless_scroll.mfk
 ;         lms3 += 1
     INC $300A
     BNE .in__00007
     INC $300B
 .in__00007:
 ; 
-;line:55:endless_scroll.mfk
+;line:53:endless_scroll.mfk
 ;         screeni += 1
     INC $82
     BNE .in__00008
     INC $83
 .in__00008:
 ; 
-;line:57:endless_scroll.mfk
+;line:55:endless_scroll.mfk
 ;         if lms1 == lms1Addr + $30 {
     LDA $3004
     CMP #$30
@@ -145,71 +145,71 @@ main:
     CMP #$40
     BNE .fi__00009
 ; 
-;line:58:endless_scroll.mfk
+;line:56:endless_scroll.mfk
 ;           lms1 = lms1Addr
     LDA #0
     STA $3004
 ; 
-;line:59:endless_scroll.mfk
+;line:57:endless_scroll.mfk
 ;           lms2 = lms2Addr
     LDA #$60
     STA $3007
 ; 
-;line:60:endless_scroll.mfk
+;line:58:endless_scroll.mfk
 ;           lms3 = lms3Addr
     LDA #$C0
     STA $300A
 ; 
-;line:61:endless_scroll.mfk
+;line:59:endless_scroll.mfk
 ;           screeni = lms1Addr
     LDA #0
     STA $82
 ; 
-;line:58:endless_scroll.mfk
+;line:56:endless_scroll.mfk
 ;           lms1 = lms1Addr
     LDA #$40
     STA $3005
 ; 
-;line:59:endless_scroll.mfk
+;line:57:endless_scroll.mfk
 ;           lms2 = lms2Addr
     STA $3008
 ; 
-;line:60:endless_scroll.mfk
+;line:58:endless_scroll.mfk
 ;           lms3 = lms3Addr
     STA $300B
 ; 
-;line:61:endless_scroll.mfk
+;line:59:endless_scroll.mfk
 ;           screeni = lms1Addr
     STA $83
 ; 
-;line:57:endless_scroll.mfk
+;line:55:endless_scroll.mfk
 ;         if lms1 == lms1Addr + $30 {
 .fi__00009:
 ; 
-;line:64:endless_scroll.mfk
+;line:62:endless_scroll.mfk
 ;         hscroli = $f
     LDA #$F
     STA $80
 ; 
-;line:39:endless_scroll.mfk
+;line:37:endless_scroll.mfk
 ;       if hscroli == $b {
 .fi__00010:
 ; 
-;line:66:endless_scroll.mfk
+;line:64:endless_scroll.mfk
 ;       antic_hscrol = hscroli
     LDA $80
     STA $D404
 ; 
-;line:67:endless_scroll.mfk
+;line:65:endless_scroll.mfk
 ;       hscroli -= 1
     DEC $80
 ; 
-;line:68:endless_scroll.mfk
+;line:66:endless_scroll.mfk
 ;       wait(1)
     LDA #1
     JSR wait
 ; 
-;line:38:endless_scroll.mfk
+;line:36:endless_scroll.mfk
 ;     while true {
     JMP .wh__00001
 ; 
@@ -218,27 +218,27 @@ main:
 * = $20c2
 wait:
 ; 
-;line:17:endless_scroll.mfk
+;line:15:endless_scroll.mfk
 ;     clc
     CLC
 ; 
-;line:18:endless_scroll.mfk
+;line:16:endless_scroll.mfk
 ;     adc os_RTCLOK+2
     ADC $14
 ; 
-;line:19:endless_scroll.mfk
+;line:17:endless_scroll.mfk
 ;     rt_check:
 rt_check:
 ; 
-;line:20:endless_scroll.mfk
+;line:18:endless_scroll.mfk
 ;     cmp os_RTCLOK+2
     CMP $14
 ; 
-;line:21:endless_scroll.mfk
+;line:19:endless_scroll.mfk
 ;     bne rt_check
     BNE rt_check
 ; 
-;line:22:endless_scroll.mfk
+;line:20:endless_scroll.mfk
 ;     rts
     RTS
 ; 
@@ -251,9 +251,6 @@ rt_check:
 .in__00008                     = $2081
 .lj80000                       = $2024
 .wh__00001                     = $201B
-SDLST                          = $0230
-SDLST.hi                       = $0231
-SDLST.lo                       = $0230
 __heap_start                   = $2000
 __reg                          = $0084
 __rwdata_end                   = $0000
@@ -270,6 +267,7 @@ antic_dmactl                   = $D400
 antic_hscrol                   = $D404
 antic_nmien                    = $D40E
 antic_nmires                   = $D40F
+antic_nmist                    = $D40F
 antic_penh                     = $D40C
 antic_penv                     = $D40D
 antic_pmbase                   = $D407
@@ -743,6 +741,9 @@ os_SAVMSC.lo                   = $0058
 os_SCRENV.array                = $E410
 os_SCRENV.first                = $E410
 os_SCRFLG                      = $02BB
+os_SDLST                       = $0230
+os_SDLST.hi                    = $0231
+os_SDLST.lo                    = $0230
 os_SDLSTH                      = $0231
 os_SDLSTL                      = $0230
 os_SDMCTL                      = $022F
@@ -1169,10 +1170,10 @@ wait                           = $20C2
     ; $022D = os_INTEMP
     ; $022E = os_CDTMF5
     ; $022F = os_SDMCTL
-    ; $0230 = SDLST
-    ; $0230 = SDLST.lo
+    ; $0230 = os_SDLST
+    ; $0230 = os_SDLST.lo
     ; $0230 = os_SDLSTL
-    ; $0231 = SDLST.hi
+    ; $0231 = os_SDLST.hi
     ; $0231 = os_SDLSTH
     ; $0232 = os_SSKCTL
     ; $0233 = os_LCOUNT
@@ -1553,6 +1554,7 @@ wait                           = $20C2
     ; $D40D = antic_penv
     ; $D40E = antic_nmien
     ; $D40F = antic_nmires
+    ; $D40F = antic_nmist
     ; $E000 = os_DCSORG.array
     ; $E000 = os_DCSORG.first
     ; $E400 = os_EDITRV.array
