@@ -1,0 +1,29 @@
+
+void system_off(){
+  asm { sei }
+  antic_nmien = 0
+  pia_portb = $fe
+  os_NMIVEC = interrupt_check.addr
+  antic_nmien = $40
+}
+
+asm void interrupt_check(){
+  bit antic_nmires
+  bpl vbl.addr
+  rti
+}
+
+asm void vbl(){
+  inc os_RTCLOK.b2
+  bne end
+  inc os_RTCLOK.b1
+  bne end
+  inc os_RTCLOK.b0
+  end:
+  rti
+}
+
+void main(){
+  system_off();
+  while(true){}
+}
