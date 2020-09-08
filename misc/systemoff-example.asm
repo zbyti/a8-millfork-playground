@@ -17,10 +17,10 @@ main:
     STA $D301
 ; 
 ;line:6:systemoff-example.mfk
-;     os_NMIVEC = interrupt_check.addr
-    LDA #lo(interrupt_check)
+;     os_NMIVEC = nmi_check.addr
+    LDA #lo(nmi_check)
     STA $FFFA
-    LDA #hi(interrupt_check)
+    LDA #hi(nmi_check)
     STA $FFFB
 ; 
 ;line:7:systemoff-example.mfk
@@ -36,7 +36,7 @@ main:
 ;line
  
 * = $201c
-interrupt_check:
+nmi_check:
 ; 
 ;line:11:systemoff-example.mfk
 ;     bit antic_nmist
@@ -164,11 +164,11 @@ gtia_trig1                     = $D011
 gtia_trig2                     = $D012
 gtia_trig3                     = $D013
 gtia_vdelay                    = $D01C
-interrupt_check                = $201C
 irq_routine_addr               = $FFFE
 irq_routine_addr.hi            = $FFFF
 irq_routine_addr.lo            = $FFFE
 main                           = $2000
+nmi_check                      = $201C
 nmi_routine_addr               = $FFFA
 nmi_routine_addr.hi            = $FFFB
 nmi_routine_addr.lo            = $FFFA
@@ -1226,7 +1226,7 @@ vbl                            = $2022
     ; $2000 = main
     ; $2000 = segment.default.heapstart
     ; $201A = .wh__00001
-    ; $201C = interrupt_check
+    ; $201C = nmi_check
     ; $2022 = vbl
     ; $202C = end
     ; $202D = segment.default.start

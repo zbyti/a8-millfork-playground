@@ -3,11 +3,11 @@ void system_off(){
   asm { sei }
   antic_nmien = 0
   pia_portb = $fe
-  os_NMIVEC = interrupt_check.addr
+  os_NMIVEC = nmi_check.addr
   antic_nmien = $40
 }
 
-asm void interrupt_check(){
+asm void nmi_check(){
   bit antic_nmist
   bpl vbl.addr
   rti
