@@ -1,29 +1,90 @@
+// ================================================
+//
+// antic_nmien = $40
+//
+// %01000000 $40 vbi
+// %10000000 $80 dli
+// %11000000 $c0 vbi + dli
+//
+// ================================================
+//
+// pia_portb = $fe
+//
+// PORTB_BASIC_OFF + PORTB_SELFTEST_OFF + %01111100
+//
+// PORTB_SELFTEST_OFF = %10000000; portb bit value to turn Self-Test off
+// PORTB_BASIC_OFF    = %00000010; portb bit value to turn Basic off
+// PORTB_SYSTEM_ON    = %00000001; portb bit value to turn System on
+//
+// ================================================
+
+byte nmien = $c0
+
+const array(byte) dl align(32) = [
+  $70,$70,$70,
+  $42,$00,$e0,2,2,2,2,$f0,2,2,2,2,
+  $41,@word[dl.addr]
+]
 
 void system_off(){
   asm { sei }
   antic_nmien = 0
+  antic_dlist = dl.addr
   pia_portb = $fe
-  os_NMIVEC = nmi_check.addr
-  antic_nmien = $40
+  os_NMIVEC = nmi.addr
+  antic_nmien = nmien
 }
 
-asm void nmi_check(){
+asm void nmi(){
   bit antic_nmist
-  bpl vbl.addr
+  bpl .vblclock
+  jmp dli.addr
+  .vblclock:
+  inc os_RTCLOK.b2
+  bne .tickend
+  inc os_RTCLOK.b1
+  bne .tickend
+  inc os_RTCLOK.b0
+  .tickend:
+  jmp vbi.addr
+}
+
+interrupt asm void dli(){
+  pha
+  lda #$de
+  sta gtia_colpf2
+  sta antic_wsync
+  pla
   rti
 }
 
-asm void vbl(){
-  inc os_RTCLOK.b2
-  bne end
-  inc os_RTCLOK.b1
-  bne end
-  inc os_RTCLOK.b0
-  end:
-  rti
+asm void pause() {
+  lda os_RTCLOK.b2
+  .rt_check:
+  cmp os_RTCLOK.b2
+  beq .rt_check
+  rts
+}
+
+noinline asm void wait(byte register(a) f) {
+  clc
+  adc os_RTCLOK.b2
+  .rt_check:
+  cmp os_RTCLOK.b2
+  bne .rt_check
+  rts
+}
+
+interrupt void vbi(){
+  gtia_colpf2 = os_RTCLOK.b2
 }
 
 void main(){
   system_off();
-  while(true){}
+
+  while(true){
+    wait(100)
+    nmien ^= %10000000
+    antic_nmien = nmien
+  }
 }
