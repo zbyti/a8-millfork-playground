@@ -2,67 +2,67 @@
 * = $2000
 main:
 ; 
-;line:93:chessboard.mfk
+;line:95:chessboard.mfk
 ;       count = 0
     LDA #0
     STA $E6
 ; 
-;line:7:chessboard.mfk
-;       LDA RTCLOK
+;line:46:chessboard.mfk
+;       LDA os_RTCLOK.b2
     LDA $14
 ; 
-;line:8:chessboard.mfk
-;       rt_check:
-.ai__00030rt_check:
+;line:47:chessboard.mfk
+;       .rt_check:
+.ai__00030pause$.rt_check:
 ; 
-;line:9:chessboard.mfk
-;       CMP RTCLOK
+;line:48:chessboard.mfk
+;       CMP os_RTCLOK.b2
     CMP $14
 ; 
-;line:10:chessboard.mfk
-;       BEQ rt_check
-    BEQ .ai__00030rt_check
+;line:49:chessboard.mfk
+;       BEQ .rt_check
+    BEQ .ai__00030pause$.rt_check
 ; 
-;line:96:chessboard.mfk
-;       RTCLOK = 0
+;line:98:chessboard.mfk
+;       os_RTCLOK.b2 = 0
     LDA #0
     STA $14
 ; 
-;line:98:chessboard.mfk
-;       while RTCLOK < 150 {
+;line:100:chessboard.mfk
+;       while os_RTCLOK.b2 < 150 {
     BEQ .he__00023
 .wh__00022:
 ; 
-;line:99:chessboard.mfk
+;line:101:chessboard.mfk
 ;           drawBoard()
     JSR drawBoard
 ; 
-;line:100:chessboard.mfk
+;line:102:chessboard.mfk
 ;           count += 1
     INC $E6
 ; 
-;line:98:chessboard.mfk
-;       while RTCLOK < 150 {
+;line:100:chessboard.mfk
+;       while os_RTCLOK.b2 < 150 {
 .he__00023:
     LDA $14
     CMP #$96
     BCC .wh__00022
 ; 
-;line:23:chessboard.mfk
-;       screen = $8400
+;line:57:chessboard.mfk
+;       screen = lmsAddr1
     LDA #0
     STA $E8
     LDA #$84
     STA $E9
 ; 
-;line:24:chessboard.mfk
-;       SDLSTL = dl.addr
-    LDA #lo(printScore$dl)
+;line:58:chessboard.mfk
+;       os_SDLST = dlPrint.addr
+    LDA #lo(dlPrint)
     STA $230
-    LDA #hi(printScore$dl)
+    LDA #hi(dlPrint)
     STA $231
 ; 
-;line:26:chessboard.mfk
+;line:60:chessboard.mfk
 ;       tmp[0] = count >> 4
     LDA $E6
     LSR
@@ -71,54 +71,54 @@ main:
     LSR
     STA printScore$tmp.array
 ; 
-;line:27:chessboard.mfk
+;line:61:chessboard.mfk
 ;       tmp[1] = count & %00001111
     LDA $E6
     AND #$F
     STA printScore$tmp.array + 1
 ; 
-;line:29:chessboard.mfk
+;line:63:chessboard.mfk
 ;       for iter:tmp {
     LDY #0
 .ai__00031.do__00017:
 ; 
-;line:30:chessboard.mfk
+;line:64:chessboard.mfk
 ;           if tmp[iter] < 10 {
     LDA printScore$tmp.array, Y
     CMP #$A
     BCS .ai__00031.el__00020
 ; 
-;line:31:chessboard.mfk
+;line:65:chessboard.mfk
 ;               screen[iter] = tmp[iter] + $10
     LDA printScore$tmp.array, Y
     ADC #$10
 ; 
-;line:30:chessboard.mfk
+;line:64:chessboard.mfk
 ;           if tmp[iter] < 10 {
     JMP .ai__00031.fi__00021
 .ai__00031.el__00020:
 ; 
-;line:33:chessboard.mfk
+;line:67:chessboard.mfk
 ;               screen[iter] = tmp[iter] + $17
     LDA printScore$tmp.array, Y
     CLC
     ADC #$17
 ; 
-;line:30:chessboard.mfk
+;line:64:chessboard.mfk
 ;           if tmp[iter] < 10 {
 .ai__00031.fi__00021:
 ; 
-;line:31:chessboard.mfk
+;line:65:chessboard.mfk
 ;               screen[iter] = tmp[iter] + $10
     STA ($E8), Y
 ; 
-;line:29:chessboard.mfk
+;line:63:chessboard.mfk
 ;       for iter:tmp {
     INY
     CPY #2
     BNE .ai__00031.do__00017
 ; 
-;line:105:chessboard.mfk
+;line:107:chessboard.mfk
 ;       while (true){}
 .wh__00026:
     BEQ .wh__00026
@@ -128,58 +128,58 @@ main:
 * = $205b
 drawBoard:
 ; 
-;line:71:chessboard.mfk
-;       screen = $6010
+;line:73:chessboard.mfk
+;       screen = lmsAddr2
     LDA #$10
     STA $E8
     LDA #$60
     STA $E9
 ; 
-;line:72:chessboard.mfk
-;       SDLSTL = dl.addr
-    LDA #lo(drawBoard$dl)
+;line:74:chessboard.mfk
+;       os_SDLST = dl.addr
+    LDA #0
     STA $230
-    LDA #hi(drawBoard$dl)
+    LDA #hi(dl)
     STA $231
 ; 
-;line:74:chessboard.mfk
+;line:76:chessboard.mfk
 ;       for i,7,downto,0 {
     LDA #8
     STA $E0
 .do__00001:
     DEC $E0
 ; 
-;line:75:chessboard.mfk
+;line:77:chessboard.mfk
 ;           for j,23,downto,0 {
     LDA #$18
     STA $E2
 .do__00004:
     DEC $E2
 ; 
-;line:76:chessboard.mfk
+;line:78:chessboard.mfk
 ;               for k,3,downto,0 {
     LDA #4
     STA $E4
 .do__00007:
     DEC $E4
 ; 
-;line:77:chessboard.mfk
+;line:79:chessboard.mfk
 ;                   screen[0] = 255
     LDA #$FF
     LDY #0
     STA ($E8), Y
 ; 
-;line:78:chessboard.mfk
+;line:80:chessboard.mfk
 ;                   screen[1] = 255
     INY
     STA ($E8), Y
 ; 
-;line:79:chessboard.mfk
+;line:81:chessboard.mfk
 ;                   screen[2] = 255
     INY
     STA ($E8), Y
 ; 
-;line:80:chessboard.mfk
+;line:82:chessboard.mfk
 ;                   screen += 6
     CLC
     LDA $E8
@@ -189,12 +189,12 @@ drawBoard:
     INC $E9
 .ah__00012:
 ; 
-;line:76:chessboard.mfk
+;line:78:chessboard.mfk
 ;               for k,3,downto,0 {
     LDA $E4
     BNE .do__00007
 ; 
-;line:82:chessboard.mfk
+;line:84:chessboard.mfk
 ;               screen += 16
     CLC
     LDA $E8
@@ -204,18 +204,18 @@ drawBoard:
     INC $E9
 .ah__00013:
 ; 
-;line:75:chessboard.mfk
+;line:77:chessboard.mfk
 ;           for j,23,downto,0 {
     LDA $E2
     BNE .do__00004
 ; 
-;line:84:chessboard.mfk
+;line:86:chessboard.mfk
 ;           if (i & 1) != 0 {
     LDA $E0
     AND #1
     BEQ .el__00010
 ; 
-;line:85:chessboard.mfk
+;line:87:chessboard.mfk
 ;               screen += 3
     CLC
     LDA $E8
@@ -225,12 +225,12 @@ drawBoard:
     INC $E9
 .ah__00014:
 ; 
-;line:84:chessboard.mfk
+;line:86:chessboard.mfk
 ;           if (i & 1) != 0 {
     JMP .fi__00011
 .el__00010:
 ; 
-;line:87:chessboard.mfk
+;line:89:chessboard.mfk
 ;               screen -= 3
     SEC
     LDA $E8
@@ -240,11 +240,11 @@ drawBoard:
     SBC #0
     STA $E9
 ; 
-;line:84:chessboard.mfk
+;line:86:chessboard.mfk
 ;           if (i & 1) != 0 {
 .fi__00011:
 ; 
-;line:74:chessboard.mfk
+;line:76:chessboard.mfk
 ;       for i,7,downto,0 {
     LDA $E0
     BNE .do__00001
@@ -254,8 +254,8 @@ drawBoard:
     RTS
 ; 
 ;line
-* = $20cf
-drawBoard$dl.array:
+* = $2100
+dl.array:
     !byte $70, $70, $70, $4F, $10, $60, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F
     !byte $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F
     !byte $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F
@@ -268,14 +268,14 @@ drawBoard$dl.array:
     !byte $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F
     !byte $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F
     !byte $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F, $F
-    !byte $F, $F, $F, $F, $F, $F, $F, $41, 0, 0
-* = $2199
-printScore$dl.array:
-    !byte $70, $70, $70, $42, 0, $84, $41, 0, 0
+    !byte $F, $F, $F, $F, $F, $F, $F, $41, 0, hi(dl)
+* = $20d0
+dlPrint.array:
+    !byte $70, $70, $70, $42, 0, $84, $41, lo(dlPrint), hi(dlPrint)
 .ah__00012                     = $2096
 .ah__00013                     = $20A5
 .ah__00014                     = $20BA
-.ai__00030rt_check             = $2006
+.ai__00030pause$.rt_check      = $2006
 .ai__00031.do__00017           = $203D
 .ai__00031.el__00020           = $204C
 .ai__00031.fi__00021           = $2052
@@ -287,10 +287,6 @@ printScore$dl.array:
 .he__00023                     = $2015
 .wh__00022                     = $2010
 .wh__00026                     = $2059
-RTCLOK                         = $0014
-SDLSTL                         = $0230
-SDLSTL.hi                      = $0231
-SDLSTL.lo                      = $0230
 __heap_start                   = $2000
 __reg                          = $0080
 __rwdata_end                   = $0000
@@ -301,12 +297,16 @@ __zeropage_last                = $00E9
 __zeropage_usage               = $006A
 antic_chactl                   = $D401
 antic_chbase                   = $D409
+antic_dlist                    = $D402
+antic_dlist.hi                 = $D403
+antic_dlist.lo                 = $D402
 antic_dlisth                   = $D403
 antic_dlistl                   = $D402
 antic_dmactl                   = $D400
 antic_hscrol                   = $D404
 antic_nmien                    = $D40E
 antic_nmires                   = $D40F
+antic_nmist                    = $D40F
 antic_penh                     = $D40C
 antic_penv                     = $D40D
 antic_pmbase                   = $D407
@@ -316,8 +316,9 @@ antic_vcount                   = $D40B
 antic_vscrol                   = $D405
 antic_wsync                    = $D40A
 count                          = $00E6
+dl.array                       = $2100
+dlPrint.array                  = $20D0
 drawBoard                      = $205B
-drawBoard$dl.array             = $20CF
 gtia_colbk                     = $D01A
 gtia_colpf0                    = $D016
 gtia_colpf1                    = $D017
@@ -768,6 +769,9 @@ os_SAVMSC.lo                   = $0058
 os_SCRENV.array                = $E410
 os_SCRENV.first                = $E410
 os_SCRFLG                      = $02BB
+os_SDLST                       = $0230
+os_SDLST.hi                    = $0231
+os_SDLST.lo                    = $0230
 os_SDLSTH                      = $0231
 os_SDLSTL                      = $0230
 os_SDMCTL                      = $022F
@@ -928,7 +932,6 @@ pokey_stimer                   = $D209
 pokey_unuse1                   = $D20C
 pokey_unuse2                   = $D20B
 pokey_unuse3                   = $D20C
-printScore$dl.array            = $2199
 printScore$iter                = $0084
 printScore$tmp.array           = $0085
 reset_routine_addr             = $FFFC
@@ -940,8 +943,8 @@ screen.lo                      = $00E8
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $2000
-segment.default.length         = $9E5E
-segment.default.start          = $21A2
+segment.default.length         = $9F27
+segment.default.start          = $20D9
     ; $0000 = __rwdata_end
     ; $0000 = __rwdata_start
     ; $0000 = os_LINZBS
@@ -978,7 +981,6 @@ segment.default.start          = $21A2
     ; $0013 = os_RTCLOK.hiword
     ; $0013 = os_RTCLOK.hiword.lo
     ; $0013 = os_RTCLOK.loword.hi
-    ; $0014 = RTCLOK
     ; $0014 = os_RTCLOK.b2
     ; $0014 = os_RTCLOK.hiword.hi
     ; $0015 = os_BUFADR
@@ -1201,10 +1203,10 @@ segment.default.start          = $21A2
     ; $022D = os_INTEMP
     ; $022E = os_CDTMF5
     ; $022F = os_SDMCTL
-    ; $0230 = SDLSTL
-    ; $0230 = SDLSTL.lo
+    ; $0230 = os_SDLST
+    ; $0230 = os_SDLST.lo
     ; $0230 = os_SDLSTL
-    ; $0231 = SDLSTL.hi
+    ; $0231 = os_SDLST.hi
     ; $0231 = os_SDLSTH
     ; $0232 = os_SSKCTL
     ; $0233 = os_LCOUNT
@@ -1446,7 +1448,7 @@ segment.default.start          = $21A2
     ; $2000 = __heap_start
     ; $2000 = main
     ; $2000 = segment.default.heapstart
-    ; $2006 = .ai__00030rt_check
+    ; $2006 = .ai__00030pause$.rt_check
     ; $2010 = .wh__00022
     ; $2015 = .he__00023
     ; $203D = .ai__00031.do__00017
@@ -1462,10 +1464,10 @@ segment.default.start          = $21A2
     ; $20BA = .ah__00014
     ; $20BD = .el__00010
     ; $20CA = .fi__00011
-    ; $20CF = drawBoard$dl.array
-    ; $2199 = printScore$dl.array
-    ; $21A2 = segment.default.start
-    ; $9E5E = segment.default.length
+    ; $20D0 = dlPrint.array
+    ; $20D9 = segment.default.start
+    ; $2100 = dl.array
+    ; $9F27 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi
@@ -1568,7 +1570,10 @@ segment.default.start          = $21A2
     ; $D303 = pia_pbctl
     ; $D400 = antic_dmactl
     ; $D401 = antic_chactl
+    ; $D402 = antic_dlist
+    ; $D402 = antic_dlist.lo
     ; $D402 = antic_dlistl
+    ; $D403 = antic_dlist.hi
     ; $D403 = antic_dlisth
     ; $D404 = antic_hscrol
     ; $D405 = antic_vscrol
@@ -1582,6 +1587,7 @@ segment.default.start          = $21A2
     ; $D40D = antic_penv
     ; $D40E = antic_nmien
     ; $D40F = antic_nmires
+    ; $D40F = antic_nmist
     ; $E000 = os_DCSORG.array
     ; $E000 = os_DCSORG.first
     ; $E400 = os_EDITRV.array

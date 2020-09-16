@@ -64,7 +64,7 @@ main:
     STA $D403
 ; 
 ;line:119:systemoff-example.mfk
-;     wait(100 )                  // waint 2 sec on PAL for the lulz
+;     wait(100)                   // waint 2 sec on PAL for the lulz
     LDA #$64
     JSR wait
 ; 
