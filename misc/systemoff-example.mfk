@@ -30,6 +30,7 @@ void system_off(){
   asm { sei }
   antic_nmien = 0
   antic_dlist = dl.addr
+  os_VDSLST = dli.addr
   pia_portb = $fe
   os_NMIVEC = nmi.addr
   antic_nmien = nmien
@@ -38,7 +39,7 @@ void system_off(){
 asm void nmi(){
   bit antic_nmist
   bpl .vblclock
-  jmp dli.addr
+  jmp (os_VDSLST)
   .vblclock:
   inc os_RTCLOK.b2
   bne .tickend

@@ -19,155 +19,162 @@ main:
     STA $D403
 ; 
 ;line:33:systemoff-example.mfk
+;     os_VDSLST = dli.addr
+    LDA #lo(dli)
+    STA $200
+    LDA #hi(dli)
+    STA $201
+; 
+;line:34:systemoff-example.mfk
 ;     pia_portb = $fe
     LDA #$FE
     STA $D301
 ; 
-;line:34:systemoff-example.mfk
+;line:35:systemoff-example.mfk
 ;     os_NMIVEC = nmi.addr
     LDA #lo(nmi)
     STA $FFFA
     LDA #hi(nmi)
     STA $FFFB
 ; 
-;line:35:systemoff-example.mfk
+;line:36:systemoff-example.mfk
 ;     antic_nmien = nmien
     LDA nmien
     STA $D40E
 ; 
-;line:85:systemoff-example.mfk
+;line:86:systemoff-example.mfk
 ;     while(true){
 .wh__00001:
 ; 
-;line:86:systemoff-example.mfk
+;line:87:systemoff-example.mfk
 ;       wait(100)
     LDA #$64
     JSR wait
 ; 
-;line:87:systemoff-example.mfk
+;line:88:systemoff-example.mfk
 ;       nmien ^= %10000000
     LDA nmien
     EOR #$80
     STA nmien
 ; 
-;line:88:systemoff-example.mfk
+;line:89:systemoff-example.mfk
 ;       antic_nmien = nmien
     STA $D40E
 ; 
-;line:85:systemoff-example.mfk
+;line:86:systemoff-example.mfk
 ;     while(true){
     JMP .wh__00001
 ; 
 ;line
  
-* = $2038
+* = $2042
 dli:
 ; 
-;line:53:systemoff-example.mfk
+;line:54:systemoff-example.mfk
 ;     pha
     PHA
 ; 
-;line:54:systemoff-example.mfk
+;line:55:systemoff-example.mfk
 ;     lda #$de
     LDA #$DE
 ; 
-;line:55:systemoff-example.mfk
+;line:56:systemoff-example.mfk
 ;     sta gtia_colpf2
     STA $D018
 ; 
-;line:56:systemoff-example.mfk
+;line:57:systemoff-example.mfk
 ;     sta antic_wsync
     STA $D40A
 ; 
-;line:57:systemoff-example.mfk
+;line:58:systemoff-example.mfk
 ;     pla
     PLA
 ; 
-;line:58:systemoff-example.mfk
+;line:59:systemoff-example.mfk
 ;     rti
     RTI
 ; 
 ;line
  
-* = $2043
+* = $204d
 wait:
 ; 
-;line:70:systemoff-example.mfk
+;line:71:systemoff-example.mfk
 ;     clc
     CLC
 ; 
-;line:71:systemoff-example.mfk
+;line:72:systemoff-example.mfk
 ;     adc os_RTCLOK.b2
     ADC $14
 ; 
-;line:72:systemoff-example.mfk
+;line:73:systemoff-example.mfk
 ;     .rt_check:
 wait$.rt_check:
 ; 
-;line:73:systemoff-example.mfk
+;line:74:systemoff-example.mfk
 ;     cmp os_RTCLOK.b2
     CMP $14
 ; 
-;line:74:systemoff-example.mfk
+;line:75:systemoff-example.mfk
 ;     bne .rt_check
     BNE wait$.rt_check
 ; 
-;line:75:systemoff-example.mfk
+;line:76:systemoff-example.mfk
 ;     rts
     RTS
 ; 
 ;line
  
-* = $204b
+* = $2055
 nmi:
 ; 
-;line:39:systemoff-example.mfk
+;line:40:systemoff-example.mfk
 ;     bit antic_nmist
     BIT $D40F
 ; 
-;line:40:systemoff-example.mfk
+;line:41:systemoff-example.mfk
 ;     bpl .vblclock
     BPL nmi$.vblclock
 ; 
-;line:41:systemoff-example.mfk
-;     jmp dli.addr
-    JMP dli.addr
-; 
 ;line:42:systemoff-example.mfk
+;     jmp (os_VDSLST)
+    JMP (os_VDSLST)
+; 
+;line:43:systemoff-example.mfk
 ;     .vblclock:
 nmi$.vblclock:
 ; 
-;line:43:systemoff-example.mfk
+;line:44:systemoff-example.mfk
 ;     inc os_RTCLOK.b2
     INC $14
 ; 
-;line:44:systemoff-example.mfk
+;line:45:systemoff-example.mfk
 ;     bne .tickend
     BNE nmi$.tickend
 ; 
-;line:45:systemoff-example.mfk
+;line:46:systemoff-example.mfk
 ;     inc os_RTCLOK.b1
     INC $13
 ; 
-;line:46:systemoff-example.mfk
+;line:47:systemoff-example.mfk
 ;     bne .tickend
     BNE nmi$.tickend
 ; 
-;line:47:systemoff-example.mfk
+;line:48:systemoff-example.mfk
 ;     inc os_RTCLOK.b0
     INC $12
 ; 
-;line:48:systemoff-example.mfk
+;line:49:systemoff-example.mfk
 ;     .tickend:
 nmi$.tickend:
 ; 
-;line:49:systemoff-example.mfk
+;line:50:systemoff-example.mfk
 ;     jmp vbi.addr
     JMP vbi.addr
 ; 
 ;line
  
-* = $2060
+* = $206a
 vbi:
     PHA 
     TXA 
@@ -175,7 +182,7 @@ vbi:
     TYA 
     PHA 
 ; 
-;line:79:systemoff-example.mfk
+;line:80:systemoff-example.mfk
 ;     gtia_colpf2 = os_RTCLOK.b2
     LDA $14
     STA $D018
@@ -198,18 +205,18 @@ vbi:
     RTI
 ; 
 ;line
-* = $2080
+* = $20a0
 dl.array:
     !byte $70, $70, $70, $42, 0, $E0, 2, 2, 2, 2, $F0, 2, 2, 2, 2, $41
     !byte lo(dl), hi(dl)
-* = $2092
+* = $208a
 nmien:
     !byte $C0
-.wh__00001                     = $2025
+.wh__00001                     = $202F
 __heap_start                   = $2000
 __reg                          = $0080
-__rwdata_end                   = $2093
-__rwdata_start                 = $2092
+__rwdata_end                   = $208B
+__rwdata_start                 = $208A
 __zeropage_end                 = $0084
 __zeropage_first               = $0080
 __zeropage_last                = $0083
@@ -234,8 +241,8 @@ antic_unuse1                   = $D408
 antic_vcount                   = $D40B
 antic_vscrol                   = $D405
 antic_wsync                    = $D40A
-dl.array                       = $2080
-dli                            = $2038
+dl.array                       = $20A0
+dli                            = $2042
 gtia_colbk                     = $D01A
 gtia_colpf0                    = $D016
 gtia_colpf1                    = $D017
@@ -293,13 +300,13 @@ irq_routine_addr               = $FFFE
 irq_routine_addr.hi            = $FFFF
 irq_routine_addr.lo            = $FFFE
 main                           = $2000
-nmi                            = $204B
-nmi$.tickend                   = $205D
-nmi$.vblclock                  = $2053
+nmi                            = $2055
+nmi$.tickend                   = $2067
+nmi$.vblclock                  = $205D
 nmi_routine_addr               = $FFFA
 nmi_routine_addr.hi            = $FFFB
 nmi_routine_addr.lo            = $FFFA
-nmien                          = $2092
+nmien                          = $208A
 os_ABUFPT                      = $001C
 os_ACMISR                      = $02D7
 os_ACMISR.hi                   = $02D8
@@ -856,11 +863,11 @@ reset_routine_addr.lo          = $FFFC
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $2000
-segment.default.length         = $9F6D
-segment.default.start          = $2093
-vbi                            = $2060
-wait                           = $2043
-wait$.rt_check                 = $2046
+segment.default.length         = $9F75
+segment.default.start          = $208B
+vbi                            = $206A
+wait                           = $204D
+wait$.rt_check                 = $2050
     ; $0000 = os_LINZBS
     ; $0000 = os_LNFLG
     ; $0000 = segment.default.bank
@@ -1353,20 +1360,20 @@ wait$.rt_check                 = $2046
     ; $2000 = __heap_start
     ; $2000 = main
     ; $2000 = segment.default.heapstart
-    ; $2025 = .wh__00001
-    ; $2038 = dli
-    ; $2043 = wait
-    ; $2046 = wait$.rt_check
-    ; $204B = nmi
-    ; $2053 = nmi$.vblclock
-    ; $205D = nmi$.tickend
-    ; $2060 = vbi
-    ; $2080 = dl.array
-    ; $2092 = __rwdata_start
-    ; $2092 = nmien
-    ; $2093 = __rwdata_end
-    ; $2093 = segment.default.start
-    ; $9F6D = segment.default.length
+    ; $202F = .wh__00001
+    ; $2042 = dli
+    ; $204D = wait
+    ; $2050 = wait$.rt_check
+    ; $2055 = nmi
+    ; $205D = nmi$.vblclock
+    ; $2067 = nmi$.tickend
+    ; $206A = vbi
+    ; $208A = __rwdata_start
+    ; $208A = nmien
+    ; $208B = __rwdata_end
+    ; $208B = segment.default.start
+    ; $20A0 = dl.array
+    ; $9F75 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi
