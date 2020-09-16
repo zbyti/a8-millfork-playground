@@ -36,7 +36,7 @@ void system_off(){
   asm { sei }                 // turn off IRQ
   antic_nmien = 0             // turn off ANTIC
   pia_portb = $fe             // turn off ROM
-  rti = $40                   // set RTS opcode
+  rti = $40                   // set RTI opcode
   vbivec = rti.addr           // set address for VBI routine
   vdslst = rti.addr           // set address for DLI routine
   os_NMIVEC = nmi.addr        // set address for custom NMI handler
