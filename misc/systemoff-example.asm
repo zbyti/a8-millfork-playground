@@ -17,7 +17,7 @@ main:
     STA $D301
 ; 
 ;line:39:systemoff-example.mfk
-;     rti = $40                   // set RTS opcode
+;     rti = $40                   // set RTI opcode
     LDA #$40
     STA $15
 ; 
