@@ -24,7 +24,7 @@ byte rti       @ $15 // default routine for VBI & DLI
 word vbivec    @ $10 // vector for VBI
 word vdslst    @ $16 // vector for DLI
 
-// simple display list
+// simple display list; LMS = $e000
 const array(byte) dl align(32) = [
   $70,$70,$70,
   $42,$00,$e0,2,2,$f0,2,2,2,$f0,2,2,2,
