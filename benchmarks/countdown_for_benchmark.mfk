@@ -30,8 +30,7 @@ asm void pause() {
 }
 
 interrupt void vbi(){
-  asm { inc RTCLOK }
-
+  RTCLOK += 1
   if run_counter{
     zpr_0 += 1
     if zpr_0 == 10 {
