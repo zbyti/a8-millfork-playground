@@ -1,4 +1,4 @@
-byte RTCLOK  @ 0
+byte RTCLOK @ 0
 byte iter0B @ 1
 word iter0W @ 2
 bool run_counter @ 4
