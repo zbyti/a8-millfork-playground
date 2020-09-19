@@ -5,13 +5,14 @@ word i@$e0, prime@$e2, k@$e4, count@$e6
 pointer screen@$e8
 
 asm void pause() {
-  LDA $14
-  rt_check:
-  CMP $14
-  BEQ rt_check
-  RTS
+  lda $14
+  .rt_check:
+  cmp $14
+  beq .rt_check
+  rts
 }
 
+// print in HEX
 void printScore() {
   array(byte) tmp[4]
   byte iter
@@ -33,7 +34,7 @@ void printScore() {
 }
 
 void main() {
-  array(byte) flags[size] align(1024)
+  array(bool) flags[size] align(1024)
   byte iter
 
   pause()
@@ -44,15 +45,15 @@ void main() {
     count = 0
 
     for i:flags {
-      flags[i] = 1
+      flags[i] = true
     }
 
     for i:flags {
-      if flags[i] != 0 {
+      if flags[i] {
         prime = (i * 2) + 3
         k = i + prime
         while k <= size {
-          flags[k] = 0
+          flags[k] = false
           k += prime
         }
         count += 1
