@@ -49,7 +49,7 @@ void main() {
     x = n * n
     n = pokey_random & 127
     y = n * n
-    if ((x+y) <= radius) {
+    if ((x + y) <= radius) {
       bingo += 1
     }
   }

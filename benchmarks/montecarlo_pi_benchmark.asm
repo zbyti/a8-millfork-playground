@@ -93,7 +93,7 @@ main:
     STX $E7
 ; 
 ;line:52:montecarlo_pi_benchmark.mfk
-;       if ((x+y) <= radius) {
+;       if ((x + y) <= radius) {
     CLC
     ADC $E4
     STA __reg
@@ -117,7 +117,7 @@ main:
 .in__00015:
 ; 
 ;line:52:montecarlo_pi_benchmark.mfk
-;       if ((x+y) <= radius) {
+;       if ((x + y) <= radius) {
 .fi__00016:
 ; 
 ;line:47:montecarlo_pi_benchmark.mfk
