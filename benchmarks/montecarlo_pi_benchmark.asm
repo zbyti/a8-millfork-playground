@@ -2,25 +2,25 @@
 * = $2000
 main:
 ; 
-;line:38:montecarlo_pi_benchmark.mfk
+;line:39:montecarlo_pi_benchmark.mfk
 ;     screen = os_SAVMSC
     LDA $59
     STA $81
     LDA $58
     STA $80
 ; 
-;line:40:montecarlo_pi_benchmark.mfk
+;line:41:montecarlo_pi_benchmark.mfk
 ;     x = 0
     LDA #0
     STA $E4
     STA $E5
 ; 
-;line:41:montecarlo_pi_benchmark.mfk
+;line:42:montecarlo_pi_benchmark.mfk
 ;     y = 0
     STA $E6
     STA $E7
 ; 
-;line:42:montecarlo_pi_benchmark.mfk
+;line:43:montecarlo_pi_benchmark.mfk
 ;     bingo = 0
     STA $E2
     STA $E3
@@ -41,58 +41,64 @@ main:
 ;     beq .rt_check
     BEQ .ai__00027pause$.rt_check
 ; 
-;line:45:montecarlo_pi_benchmark.mfk
+;line:46:montecarlo_pi_benchmark.mfk
 ;     os_RTCLOK = 0
     LDA #0
     STA $12
     STA $13
     STA $14
 ; 
-;line:47:montecarlo_pi_benchmark.mfk
+;line:48:montecarlo_pi_benchmark.mfk
 ;     for i,0,to,probe {
     STA $E0
     STA $E1
 .wh__00011:
 ; 
-;line:48:montecarlo_pi_benchmark.mfk
+;line:49:montecarlo_pi_benchmark.mfk
 ;       n = pokey_random & 127
     LDA $D20A
     AND #$7F
-    STA $E8
-    LDA #0
-    STA $E9
+; 
+;line:50:montecarlo_pi_benchmark.mfk
+;       x = n * word(n)
+    STA __reg + 2
 ; 
 ;line:49:montecarlo_pi_benchmark.mfk
-;       x = n * n
-    LDA $E8
-    LDX #0
+;       n = pokey_random & 127
+    STA $82
+; 
+;line:50:montecarlo_pi_benchmark.mfk
+;       x = n * word(n)
     STA __reg
-    STX __reg + 1
-    STA __reg + 2
-    STX __reg + 3
-    JSR __mul_u16u16u16
+    LDA #0
+    STA __reg + 1
+    JSR __mul_u16u8u16
     STA $E4
     STX $E5
 ; 
-;line:50:montecarlo_pi_benchmark.mfk
+;line:51:montecarlo_pi_benchmark.mfk
 ;       n = pokey_random & 127
     LDA $D20A
     AND #$7F
-    STA $E8
-    STY $E9
+; 
+;line:52:montecarlo_pi_benchmark.mfk
+;       y = n * word(n)
+    STA __reg + 2
 ; 
 ;line:51:montecarlo_pi_benchmark.mfk
-;       y = n * n
-    LDX #0
+;       n = pokey_random & 127
+    STA $82
+; 
+;line:52:montecarlo_pi_benchmark.mfk
+;       y = n * word(n)
     STA __reg
-    STX __reg + 1
-    STA __reg + 2
-    STX __reg + 3
-    JSR __mul_u16u16u16
+    LDA #0
+    STA __reg + 1
+    JSR __mul_u16u8u16
     STA $E6
     STX $E7
 ; 
-;line:52:montecarlo_pi_benchmark.mfk
+;line:53:montecarlo_pi_benchmark.mfk
 ;       if ((x + y) <= radius) {
     CLC
     ADC $E4
@@ -109,18 +115,18 @@ main:
     BCC .fi__00016
 .cp__00017:
 ; 
-;line:53:montecarlo_pi_benchmark.mfk
+;line:54:montecarlo_pi_benchmark.mfk
 ;         bingo += 1
     INC $E2
     BNE .in__00015
     INC $E3
 .in__00015:
 ; 
-;line:52:montecarlo_pi_benchmark.mfk
+;line:53:montecarlo_pi_benchmark.mfk
 ;       if ((x + y) <= radius) {
 .fi__00016:
 ; 
-;line:47:montecarlo_pi_benchmark.mfk
+;line:48:montecarlo_pi_benchmark.mfk
 ;     for i,0,to,probe {
     LDA $E0
     CMP #$F
@@ -136,7 +142,7 @@ main:
     JMP .wh__00011
 .ew__00014:
 ; 
-;line:56:montecarlo_pi_benchmark.mfk
+;line:57:montecarlo_pi_benchmark.mfk
 ;     p = 4 * bingo
     LDA $E2
     ASL
@@ -145,53 +151,134 @@ main:
     ROL
     ASL __reg
     ROL
-    STA $EB
+    STA $E9
     LDA __reg
-    STA $EA
+    STA $E8
     LDA $13
 ; 
-;line:58:montecarlo_pi_benchmark.mfk
-;     n = os_RTCLOK.b2 + (os_RTCLOK.b1 * 256)
+;line:59:montecarlo_pi_benchmark.mfk
+;     t = os_RTCLOK.b2 + (os_RTCLOK.b1 * 256)
     STA __reg + 1
     LDA $14
 ; 
-;line:60:montecarlo_pi_benchmark.mfk
-;     printScore(n)
+;line:61:montecarlo_pi_benchmark.mfk
+;     printScore(t)
     STA printScore$val
 ; 
-;line:58:montecarlo_pi_benchmark.mfk
-;     n = os_RTCLOK.b2 + (os_RTCLOK.b1 * 256)
-    STA $E8
+;line:59:montecarlo_pi_benchmark.mfk
+;     t = os_RTCLOK.b2 + (os_RTCLOK.b1 * 256)
+    STA $EA
     LDA __reg + 1
 ; 
-;line:60:montecarlo_pi_benchmark.mfk
-;     printScore(n)
+;line:61:montecarlo_pi_benchmark.mfk
+;     printScore(t)
     STA printScore$val + 1
 ; 
-;line:58:montecarlo_pi_benchmark.mfk
-;     n = os_RTCLOK.b2 + (os_RTCLOK.b1 * 256)
-    STA $E9
-; 
-;line:60:montecarlo_pi_benchmark.mfk
-;     printScore(n)
-    JSR printScore
+;line:59:montecarlo_pi_benchmark.mfk
+;     t = os_RTCLOK.b2 + (os_RTCLOK.b1 * 256)
+    STA $EB
 ; 
 ;line:61:montecarlo_pi_benchmark.mfk
+;     printScore(t)
+    JSR printScore
+; 
+;line:62:montecarlo_pi_benchmark.mfk
 ;     printScore(p)
-    LDA $EA
+    LDA $E8
     STA printScore$val
-    LDA $EB
+    LDA $E9
     STA printScore$val + 1
     JSR printScore
 ; 
-;line:63:montecarlo_pi_benchmark.mfk
+;line:64:montecarlo_pi_benchmark.mfk
 ;     while true {}
 .wh__00023:
     JMP .wh__00023
 ; 
 ;line
  
-* = $20c7
+* = $20bb
+__mul_u16u8u16:
+; 
+;line:49:zp_reg.mfk
+;       ? LDA #0
+    LDA #0
+; 
+;line:50:zp_reg.mfk
+;       ? TAX
+    TAX
+; 
+;line:51:zp_reg.mfk
+;       ? JMP __mul_u16u8u16_start
+    BEQ __mul_u16u8u16_start
+; 
+;line:52:zp_reg.mfk
+;   __mul_u16u8u16_add:
+__mul_u16u8u16_add:
+; 
+;line:53:zp_reg.mfk
+;       ? CLC
+    CLC
+; 
+;line:54:zp_reg.mfk
+;       ? ADC __reg
+    ADC __reg
+; 
+;line:55:zp_reg.mfk
+;       ? TAY
+    TAY
+; 
+;line:56:zp_reg.mfk
+;       ? TXA
+    TXA
+; 
+;line:57:zp_reg.mfk
+;       ? ADC __reg+1
+    ADC __reg + 1
+; 
+;line:58:zp_reg.mfk
+;       ? TAX
+    TAX
+; 
+;line:59:zp_reg.mfk
+;       ? TYA
+    TYA
+; 
+;line:60:zp_reg.mfk
+;   __mul_u16u8u16_loop:
+__mul_u16u8u16_loop:
+; 
+;line:61:zp_reg.mfk
+;       ? ASL __reg
+    ASL __reg
+; 
+;line:62:zp_reg.mfk
+;       ? ROL __reg+1
+    ROL __reg + 1
+; 
+;line:63:zp_reg.mfk
+;   __mul_u16u8u16_start:
+__mul_u16u8u16_start:
+; 
+;line:64:zp_reg.mfk
+;       ? LSR __reg+2
+    LSR __reg + 2
+; 
+;line:65:zp_reg.mfk
+;       ? BCS __mul_u16u8u16_add
+    BCS __mul_u16u8u16_add
+; 
+;line:66:zp_reg.mfk
+;       ? BNE __mul_u16u8u16_loop
+    BNE __mul_u16u8u16_loop
+; 
+;line:67:zp_reg.mfk
+;       ? RTS
+    RTS
+; 
+;line
+ 
+* = $20d4
 printScore:
 ; 
 ;line:18:montecarlo_pi_benchmark.mfk
@@ -280,157 +367,25 @@ printScore:
     RTS
 ; 
 ;line
- 
-* = $210d
-__mul_u16u16u16:
-; 
-;line:133:zp_reg.mfk
-;       ? LDA __reg+1
-    LDA __reg + 1
-; 
-;line:134:zp_reg.mfk
-;       ? PHA
-    PHA
-; 
-;line:135:zp_reg.mfk
-;       ? LDA __reg
-    LDA __reg
-; 
-;line:136:zp_reg.mfk
-;       ? PHA
-    PHA
-; 
-;line:137:zp_reg.mfk
-;       ? TSX
-    TSX
-; 
-;line:148:zp_reg.mfk
-;       ? LDA #0
-    LDA #0
-; 
-;line:149:zp_reg.mfk
-;       ? STA __reg
-    STA __reg
-; 
-;line:150:zp_reg.mfk
-;       ? STA __reg+1
-    STA __reg + 1
-; 
-;line:152:zp_reg.mfk
-;       ? LDY #16
-    LDY #$10
-; 
-;line:153:zp_reg.mfk
-;   __mul_u16u16u32_loop:
-__mul_u16u16u32_loop:
-; 
-;line:154:zp_reg.mfk
-;       ? ASL __reg
-    ASL __reg
-; 
-;line:155:zp_reg.mfk
-;       ? ROL __reg+1
-    ROL __reg + 1
-; 
-;line:156:zp_reg.mfk
-;       ? ROL __reg+2
-    ROL __reg + 2
-; 
-;line:157:zp_reg.mfk
-;       ? ROL __reg+3
-    ROL __reg + 3
-; 
-;line:158:zp_reg.mfk
-;       ? BCC __mul_u16u16u32_skip
-    BCC __mul_u16u16u32_skip
-; 
-;line:160:zp_reg.mfk
-;       ? LDA  $101,X
-    LDA $101, X
-; 
-;line:164:zp_reg.mfk
-;       ? CLC
-    CLC
-; 
-;line:165:zp_reg.mfk
-;       ? ADC __reg
-    ADC __reg
-; 
-;line:166:zp_reg.mfk
-;       ? STA __reg
-    STA __reg
-; 
-;line:168:zp_reg.mfk
-;       ? LDA  $102,X
-    LDA $102, X
-; 
-;line:172:zp_reg.mfk
-;       ? ADC __reg+1
-    ADC __reg + 1
-; 
-;line:173:zp_reg.mfk
-;       ? STA __reg+1
-    STA __reg + 1
-; 
-;line:174:zp_reg.mfk
-;       ? BCC __mul_u16u16u32_skip
-    BCC __mul_u16u16u32_skip
-; 
-;line:175:zp_reg.mfk
-;       ? INC __reg+2
-    INC __reg + 2
-; 
-;line:176:zp_reg.mfk
-;   __mul_u16u16u32_skip:
-__mul_u16u16u32_skip:
-; 
-;line:177:zp_reg.mfk
-;       ? DEY
-    DEY
-; 
-;line:178:zp_reg.mfk
-;       ? BNE __mul_u16u16u32_loop
-    BNE __mul_u16u16u32_loop
-; 
-;line:185:zp_reg.mfk
-;       ? PLA
-    PLA
-; 
-;line:186:zp_reg.mfk
-;       ? PLA
-    PLA
-; 
-;line:189:zp_reg.mfk
-;       ? LDA __reg
-    LDA __reg
-; 
-;line:190:zp_reg.mfk
-;       ? LDX __reg+1
-    LDX __reg + 1
-; 
-;line:191:zp_reg.mfk
-;       ? RTS
-    RTS
-; 
-;line
-.ah__00010                     = $210C
+.ah__00010                     = $2119
 .ai__00027pause$.rt_check      = $2018
-.cp__00017                     = $2079
-.do__00005                     = $20E5
-.el__00008                     = $20F4
-.el__00019                     = $208B
-.ew__00014                     = $2094
-.fi__00009                     = $20FA
-.fi__00016                     = $207F
-.in__00015                     = $207F
-.in__00018                     = $2091
+.cp__00017                     = $206D
+.do__00005                     = $20F2
+.el__00008                     = $2101
+.el__00019                     = $207F
+.ew__00014                     = $2088
+.fi__00009                     = $2107
+.fi__00016                     = $2073
+.in__00015                     = $2073
+.in__00018                     = $2085
 .wh__00011                     = $2028
-.wh__00023                     = $20C4
+.wh__00023                     = $20B8
 __heap_start                   = $2000
-__mul_u16u16u16                = $210D
-__mul_u16u16u32_loop           = $211C
-__mul_u16u16u32_skip           = $2139
-__reg                          = $0082
+__mul_u16u8u16                 = $20BB
+__mul_u16u8u16_add             = $20C0
+__mul_u16u8u16_loop            = $20C9
+__mul_u16u8u16_start           = $20CD
+__reg                          = $0083
 __rwdata_end                   = $0000
 __rwdata_start                 = $0000
 __zeropage_end                 = $00EC
@@ -520,12 +475,13 @@ main$bingo.lo                  = $00E2
 main$i                         = $00E0
 main$i.hi                      = $00E1
 main$i.lo                      = $00E0
-main$n                         = $00E8
-main$n.hi                      = $00E9
-main$n.lo                      = $00E8
-main$p                         = $00EA
-main$p.hi                      = $00EB
-main$p.lo                      = $00EA
+main$n                         = $0082
+main$p                         = $00E8
+main$p.hi                      = $00E9
+main$p.lo                      = $00E8
+main$t                         = $00EA
+main$t.hi                      = $00EB
+main$t.lo                      = $00EA
 main$x                         = $00E4
 main$x.hi                      = $00E5
 main$x.lo                      = $00E4
@@ -1085,10 +1041,10 @@ pokey_stimer                   = $D209
 pokey_unuse1                   = $D20C
 pokey_unuse2                   = $D20B
 pokey_unuse3                   = $D20C
-printScore                     = $20C7
-printScore$iter                = $0086
-printScore$tmp.array           = $0089
-printScore$val                 = $0087
+printScore                     = $20D4
+printScore$iter                = $0087
+printScore$tmp.array           = $008A
+printScore$val                 = $0088
 reset_routine_addr             = $FFFC
 reset_routine_addr.hi          = $FFFD
 reset_routine_addr.lo          = $FFFC
@@ -1098,8 +1054,8 @@ screen.lo                      = $0080
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $2000
-segment.default.length         = $9EBD
-segment.default.start          = $2143
+segment.default.length         = $9EE6
+segment.default.start          = $211A
     ; $0000 = __rwdata_end
     ; $0000 = __rwdata_start
     ; $0000 = os_LINZBS
@@ -1277,10 +1233,11 @@ segment.default.start          = $2143
     ; $0080 = screen
     ; $0080 = screen.lo
     ; $0081 = screen.hi
-    ; $0082 = __reg
-    ; $0086 = printScore$iter
-    ; $0087 = printScore$val
-    ; $0089 = printScore$tmp.array
+    ; $0082 = main$n
+    ; $0083 = __reg
+    ; $0087 = printScore$iter
+    ; $0088 = printScore$val
+    ; $008A = printScore$tmp.array
     ; $00E0 = main$i
     ; $00E0 = main$i.lo
     ; $00E1 = main$i.hi
@@ -1293,13 +1250,13 @@ segment.default.start          = $2143
     ; $00E6 = main$y
     ; $00E6 = main$y.lo
     ; $00E7 = main$y.hi
-    ; $00E8 = main$n
-    ; $00E8 = main$n.lo
-    ; $00E9 = main$n.hi
-    ; $00EA = main$p
-    ; $00EA = main$p.lo
+    ; $00E8 = main$p
+    ; $00E8 = main$p.lo
+    ; $00E9 = main$p.hi
+    ; $00EA = main$t
+    ; $00EA = main$t.lo
     ; $00EB = __zeropage_last
-    ; $00EB = main$p.hi
+    ; $00EB = main$t.hi
     ; $00EC = __zeropage_end
     ; $0200 = os_INTABS
     ; $0200 = os_INTABS.lo
@@ -1620,23 +1577,24 @@ segment.default.start          = $2143
     ; $2000 = segment.default.heapstart
     ; $2018 = .ai__00027pause$.rt_check
     ; $2028 = .wh__00011
-    ; $2079 = .cp__00017
-    ; $207F = .fi__00016
-    ; $207F = .in__00015
-    ; $208B = .el__00019
-    ; $2091 = .in__00018
-    ; $2094 = .ew__00014
-    ; $20C4 = .wh__00023
-    ; $20C7 = printScore
-    ; $20E5 = .do__00005
-    ; $20F4 = .el__00008
-    ; $20FA = .fi__00009
-    ; $210C = .ah__00010
-    ; $210D = __mul_u16u16u16
-    ; $211C = __mul_u16u16u32_loop
-    ; $2139 = __mul_u16u16u32_skip
-    ; $2143 = segment.default.start
-    ; $9EBD = segment.default.length
+    ; $206D = .cp__00017
+    ; $2073 = .fi__00016
+    ; $2073 = .in__00015
+    ; $207F = .el__00019
+    ; $2085 = .in__00018
+    ; $2088 = .ew__00014
+    ; $20B8 = .wh__00023
+    ; $20BB = __mul_u16u8u16
+    ; $20C0 = __mul_u16u8u16_add
+    ; $20C9 = __mul_u16u8u16_loop
+    ; $20CD = __mul_u16u8u16_start
+    ; $20D4 = printScore
+    ; $20F2 = .do__00005
+    ; $2101 = .el__00008
+    ; $2107 = .fi__00009
+    ; $2119 = .ah__00010
+    ; $211A = segment.default.start
+    ; $9EE6 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi
