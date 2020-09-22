@@ -2,76 +2,87 @@
 * = $2000
 main:
 ; 
-;line:5:horizontal_stars.mfk
+;line:6:horizontal_stars.mfk
 ;     os_PCOLR0 = $e
     LDA #$E
     STA $2C0
 ; 
-;line:6:horizontal_stars.mfk
+;line:7:horizontal_stars.mfk
 ;     gtia_grafm = $e
     STA $D011
 ; 
-;line:8:horizontal_stars.mfk
+;line:9:horizontal_stars.mfk
 ;     for i:stars {
-    LDX #0
+    LDY #0
 .do__00001:
 ; 
-;line:9:horizontal_stars.mfk
+;line:10:horizontal_stars.mfk
 ;       stars[i] = pokey_random
     LDA $D20A
-    STA main$stars.array, X
+    STA main$stars.array, Y
 ; 
-;line:8:horizontal_stars.mfk
+;line:11:horizontal_stars.mfk
+;       speed[i] = (pokey_random & 3) + 1
+    LDA $D20A
+    AND #3
+    CLC
+    ADC #1
+    STA main$speed.array, Y
+; 
+;line:9:horizontal_stars.mfk
 ;     for i:stars {
-    INX
+    INY
     BNE .do__00001
 ; 
-;line:12:horizontal_stars.mfk
+;line:14:horizontal_stars.mfk
 ;     while true {
 .wh__00004:
 ; 
-;line:13:horizontal_stars.mfk
+;line:15:horizontal_stars.mfk
 ;       if antic_vcount == 0 {
     LDA $D40B
     BNE .fi__00011
 ; 
-;line:14:horizontal_stars.mfk
+;line:16:horizontal_stars.mfk
 ;         for i:stars {
 .do__00008:
 ; 
-;line:15:horizontal_stars.mfk
+;line:17:horizontal_stars.mfk
 ;           antic_wsync = 1
     LDA #1
     STA $D40A
 ; 
-;line:16:horizontal_stars.mfk
+;line:18:horizontal_stars.mfk
 ;           gtia_hposm0 = stars[i]
-    LDA main$stars.array, X
+    LDA main$stars.array, Y
     STA $D004
 ; 
-;line:17:horizontal_stars.mfk
-;           stars[i] += 1
-    INC main$stars.array, X
+;line:19:horizontal_stars.mfk
+;           stars[i] += speed[i]
+    LDA main$speed.array, Y
+    CLC
+    ADC main$stars.array, Y
+    STA main$stars.array, Y
 ; 
-;line:14:horizontal_stars.mfk
+;line:16:horizontal_stars.mfk
 ;         for i:stars {
-    INX
+    INY
     BNE .do__00008
 ; 
-;line:13:horizontal_stars.mfk
+;line:15:horizontal_stars.mfk
 ;       if antic_vcount == 0 {
 .fi__00011:
 ; 
-;line:12:horizontal_stars.mfk
+;line:14:horizontal_stars.mfk
 ;     while true {
     JMP .wh__00004
 ; 
 ;line
 .do__00001                     = $200A
-.do__00008                     = $2018
-.fi__00011                     = $2029
-.wh__00004                     = $2013
-__heap_start                   = $2200
+.do__00008                     = $2023
+.fi__00011                     = $203B
+.wh__00004                     = $201E
+__heap_start                   = $2300
 __reg                          = $0080
 __rwdata_end                   = $0000
 __rwdata_start                 = $0000
@@ -157,6 +168,7 @@ irq_routine_addr.hi            = $FFFF
 irq_routine_addr.lo            = $FFFE
 main                           = $2000
 main$i                         = $0084
+main$speed.array               = $2200
 main$stars.array               = $2100
 nmi_routine_addr               = $FFFA
 nmi_routine_addr.hi            = $FFFB
@@ -716,9 +728,9 @@ reset_routine_addr.hi          = $FFFD
 reset_routine_addr.lo          = $FFFC
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
-segment.default.heapstart      = $2200
-segment.default.length         = $9FD4
-segment.default.start          = $202C
+segment.default.heapstart      = $2300
+segment.default.length         = $9FC2
+segment.default.start          = $203E
     ; $0000 = __rwdata_end
     ; $0000 = __rwdata_start
     ; $0000 = os_LINZBS
@@ -1213,14 +1225,15 @@ segment.default.start          = $202C
     ; $0700 = os_INIML
     ; $2000 = main
     ; $200A = .do__00001
-    ; $2013 = .wh__00004
-    ; $2018 = .do__00008
-    ; $2029 = .fi__00011
-    ; $202C = segment.default.start
+    ; $201E = .wh__00004
+    ; $2023 = .do__00008
+    ; $203B = .fi__00011
+    ; $203E = segment.default.start
     ; $2100 = main$stars.array
-    ; $2200 = __heap_start
-    ; $2200 = segment.default.heapstart
-    ; $9FD4 = segment.default.length
+    ; $2200 = main$speed.array
+    ; $2300 = __heap_start
+    ; $2300 = segment.default.heapstart
+    ; $9FC2 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi
