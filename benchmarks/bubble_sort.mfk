@@ -1,6 +1,6 @@
 pointer screen @ $84
 byte i @ $80, n1 @ $81, n2 @ $82, t @ $83
-array(byte) sorttable align(fast) = [for i,255,downto,1 [i]]
+array(byte) sorttable align(fast) = [for x,255,downto,1 [x]]
 
 asm void pause() {
   lda os_RTCLOK.b2
