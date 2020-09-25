@@ -19,32 +19,32 @@ main:
 .wh__00001:
 ; 
 ;line:25:landscape.mfk
-;       color = 13
-    LDA #$D
-    STA $2FB
-; 
-;line:26:landscape.mfk
-;       prev_y = 1
-    LDA #1
-    STA $5A
-; 
-;line:27:landscape.mfk
 ;       cursor_x = i
     LDA i
     STA $55
     LDA #0
     STA $56
 ; 
-;line:28:landscape.mfk
+;line:26:landscape.mfk
 ;       prev_x = i
     LDA i
     STA $5B
     LDA #0
     STA $5C
 ; 
+;line:27:landscape.mfk
+;       color = 13
+    LDA #$D
+    STA $2FB
+; 
+;line:28:landscape.mfk
+;       prev_y = 1
+    LDA #1
+    STA $5A
+; 
 ;line:30:landscape.mfk
 ;       while color != $ff {
-    BEQ .he__00006
+    BNE .he__00006
 .wh__00005:
 ; 
 ;line:31:landscape.mfk
