@@ -2,118 +2,118 @@
 * = $2000
 main:
 ; 
-;line:17:landscape.mfk
+;line:20:landscape.mfk
 ;     openmode(9)
     LDA #9
     JSR $EF9C
 ; 
-;line:19:landscape.mfk
+;line:22:landscape.mfk
 ;     os_COLOR4 = $b0
     LDA #$B0
     STA $2C8
 ; 
-;line:21:landscape.mfk
+;line:24:landscape.mfk
 ;     for i,0,to,79 {
     LDA #0
     STA i
 .wh__00001:
 ; 
-;line:22:landscape.mfk
+;line:25:landscape.mfk
 ;       color = 13
     LDA #$D
     STA $2FB
 ; 
-;line:23:landscape.mfk
+;line:26:landscape.mfk
 ;       prev_y = 1
     LDA #1
     STA $5A
 ; 
-;line:24:landscape.mfk
+;line:27:landscape.mfk
 ;       cursor_x = i
     LDA i
     STA $55
     LDA #0
     STA $56
 ; 
-;line:25:landscape.mfk
+;line:28:landscape.mfk
 ;       prev_x = i
     LDA i
     STA $5B
     LDA #0
     STA $5C
 ; 
-;line:27:landscape.mfk
+;line:30:landscape.mfk
 ;       while color != $ff {
     BEQ .he__00006
 .wh__00005:
 ; 
-;line:28:landscape.mfk
+;line:31:landscape.mfk
 ;         cursor_y = color_height[color]
     LDY $2FB
     LDA color_height.array, Y
     STA $54
 ; 
-;line:29:landscape.mfk
+;line:32:landscape.mfk
 ;         tmp = color_height[color]
     LDY $2FB
     LDA color_height.array, Y
     STA tmp
 ; 
-;line:31:landscape.mfk
+;line:34:landscape.mfk
 ;         if (pokey_random & 1) != 0 {
     LDA $D20A
     AND #1
     BEQ .el__00010
 ; 
-;line:32:landscape.mfk
+;line:35:landscape.mfk
 ;           tmp += 1
     INC tmp
 ; 
-;line:31:landscape.mfk
+;line:34:landscape.mfk
 ;         if (pokey_random & 1) != 0 {
     JMP .fi__00011
 .el__00010:
 ; 
-;line:34:landscape.mfk
+;line:37:landscape.mfk
 ;           if (pokey_random & 1) != 0 {
     LDA $D20A
     AND #1
     BEQ .fi__00009
 ; 
-;line:35:landscape.mfk
+;line:38:landscape.mfk
 ;             tmp -= 1
     DEC tmp
 ; 
-;line:34:landscape.mfk
+;line:37:landscape.mfk
 ;           if (pokey_random & 1) != 0 {
 .fi__00009:
 ; 
-;line:31:landscape.mfk
+;line:34:landscape.mfk
 ;         if (pokey_random & 1) != 0 {
 .fi__00011:
 ; 
-;line:39:landscape.mfk
+;line:42:landscape.mfk
 ;         color_height[color] = tmp
     LDA tmp
     LDY $2FB
     STA color_height.array, Y
 ; 
-;line:40:landscape.mfk
+;line:43:landscape.mfk
 ;         drawto()
     JSR $F9C2
 ; 
-;line:41:landscape.mfk
+;line:44:landscape.mfk
 ;         color -= 1
     DEC $2FB
 ; 
-;line:27:landscape.mfk
+;line:30:landscape.mfk
 ;       while color != $ff {
 .he__00006:
     LDA $2FB
     CMP #$FF
     BNE .wh__00005
 ; 
-;line:21:landscape.mfk
+;line:24:landscape.mfk
 ;     for i,0,to,79 {
     LDA i
     CMP #$4F
@@ -122,7 +122,7 @@ main:
     JMP .wh__00001
 .ew__00004:
 ; 
-;line:45:landscape.mfk
+;line:48:landscape.mfk
 ;     while true {}
 .wh__00014:
     JMP .wh__00014

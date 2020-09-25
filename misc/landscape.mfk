@@ -1,3 +1,6 @@
+// idea @ilmenit
+// https://demozoo.org/productions/280623/
+
 alias prev_x = os_OLDCOL
 alias cursor_x = os_COLCRS
 alias prev_y = os_OLDROW
