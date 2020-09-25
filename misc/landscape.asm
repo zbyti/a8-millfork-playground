@@ -7,113 +7,103 @@ main:
     LDA #9
     JSR $EF9C
 ; 
-;line:22:landscape.mfk
+;line:21:landscape.mfk
 ;     os_COLOR4 = $b0
     LDA #$B0
     STA $2C8
 ; 
-;line:24:landscape.mfk
+;line:23:landscape.mfk
 ;     for i,0,to,79 {
     LDA #0
     STA i
 .wh__00001:
 ; 
-;line:25:landscape.mfk
+;line:24:landscape.mfk
 ;       cursor_x = i
     LDA i
     STA $55
     LDA #0
     STA $56
 ; 
-;line:26:landscape.mfk
+;line:25:landscape.mfk
 ;       prev_x = i
     LDA i
     STA $5B
     LDA #0
     STA $5C
 ; 
-;line:27:landscape.mfk
+;line:26:landscape.mfk
 ;       color = 13
     LDA #$D
     STA $2FB
 ; 
-;line:28:landscape.mfk
+;line:27:landscape.mfk
 ;       prev_y = 1
     LDA #1
     STA $5A
 ; 
-;line:30:landscape.mfk
+;line:29:landscape.mfk
 ;       while color != $ff {
     BNE .he__00006
 .wh__00005:
 ; 
-;line:31:landscape.mfk
+;line:30:landscape.mfk
 ;         cursor_y = color_height[color]
     LDY $2FB
     LDA color_height.array, Y
     STA $54
 ; 
-;line:32:landscape.mfk
-;         tmp = color_height[color]
-    LDY $2FB
-    LDA color_height.array, Y
-    STA tmp
-; 
-;line:34:landscape.mfk
+;line:31:landscape.mfk
 ;         if (pokey_random & 1) != 0 {
     LDA $D20A
     AND #1
     BEQ .el__00010
 ; 
-;line:35:landscape.mfk
-;           tmp += 1
-    INC tmp
+;line:32:landscape.mfk
+;           color_height[color] += 1
+    LDX $2FB
+    INC color_height.array, X
 ; 
-;line:34:landscape.mfk
+;line:31:landscape.mfk
 ;         if (pokey_random & 1) != 0 {
     JMP .fi__00011
 .el__00010:
 ; 
-;line:37:landscape.mfk
+;line:34:landscape.mfk
 ;           if (pokey_random & 1) != 0 {
     LDA $D20A
     AND #1
     BEQ .fi__00009
 ; 
-;line:38:landscape.mfk
-;             tmp -= 1
-    DEC tmp
+;line:35:landscape.mfk
+;             color_height[color] -= 1
+    LDX $2FB
+    DEC color_height.array, X
 ; 
-;line:37:landscape.mfk
+;line:34:landscape.mfk
 ;           if (pokey_random & 1) != 0 {
 .fi__00009:
 ; 
-;line:34:landscape.mfk
+;line:31:landscape.mfk
 ;         if (pokey_random & 1) != 0 {
 .fi__00011:
 ; 
-;line:42:landscape.mfk
-;         color_height[color] = tmp
-    LDA tmp
-    LDY $2FB
-    STA color_height.array, Y
-; 
-;line:43:landscape.mfk
+;line:38:landscape.mfk
 ;         drawto()
     JSR $F9C2
 ; 
-;line:44:landscape.mfk
+;line:39:landscape.mfk
 ;         color -= 1
     DEC $2FB
 ; 
-;line:30:landscape.mfk
+;line:29:landscape.mfk
 ;       while color != $ff {
 .he__00006:
     LDA $2FB
     CMP #$FF
     BNE .wh__00005
 ; 
-;line:24:landscape.mfk
+;line:23:landscape.mfk
 ;     for i,0,to,79 {
     LDA i
     CMP #$4F
@@ -122,31 +112,31 @@ main:
     JMP .wh__00001
 .ew__00004:
 ; 
-;line:48:landscape.mfk
+;line:43:landscape.mfk
 ;     while true {}
 .wh__00014:
     JMP .wh__00014
 ; 
 ;line
-* = $2071
+* = $2069
 color_height.array:
     !byte $AA, $96, $90, $90, $7A, $7A, $6E, $6E, $5E, $5E, $56, $56, $52, $50
-.el__00010                     = $2045
-.ew__00004                     = $206E
+.el__00010                     = $2041
+.ew__00004                     = $2066
 .fi__00009                     = $204E
 .fi__00011                     = $204E
-.he__00006                     = $205C
+.he__00006                     = $2054
 .wh__00001                     = $200E
 .wh__00005                     = $2029
-.wh__00014                     = $206E
+.wh__00014                     = $2066
 __heap_start                   = $2000
 __reg                          = $0080
-__rwdata_end                   = $207F
-__rwdata_start                 = $2071
-__zeropage_end                 = $0086
+__rwdata_end                   = $2077
+__rwdata_start                 = $2069
+__zeropage_end                 = $0085
 __zeropage_first               = $0080
-__zeropage_last                = $0085
-__zeropage_usage               = $0006
+__zeropage_last                = $0084
+__zeropage_usage               = $0005
 antic_chactl                   = $D401
 antic_chbase                   = $D409
 antic_dlist                    = $D402
@@ -167,7 +157,7 @@ antic_unuse1                   = $D408
 antic_vcount                   = $D40B
 antic_vscrol                   = $D405
 antic_wsync                    = $D40A
-color_height.array             = $2071
+color_height.array             = $2069
 gtia_colbk                     = $D01A
 gtia_colpf0                    = $D016
 gtia_colpf1                    = $D017
@@ -221,7 +211,7 @@ gtia_trig1                     = $D011
 gtia_trig2                     = $D012
 gtia_trig3                     = $D013
 gtia_vdelay                    = $D01C
-i                              = $0085
+i                              = $0084
 irq_routine_addr               = $FFFE
 irq_routine_addr.hi            = $FFFF
 irq_routine_addr.lo            = $FFFE
@@ -785,9 +775,8 @@ reset_routine_addr.lo          = $FFFC
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $2000
-segment.default.length         = $9F81
-segment.default.start          = $207F
-tmp                            = $0084
+segment.default.length         = $9F89
+segment.default.start          = $2077
     ; $0000 = os_LINZBS
     ; $0000 = os_LNFLG
     ; $0000 = segment.default.bank
@@ -797,8 +786,8 @@ tmp                            = $0084
     ; $0003 = os_CASINI.hi
     ; $0004 = os_RAMLO
     ; $0004 = os_RAMLO.lo
+    ; $0005 = __zeropage_usage
     ; $0005 = os_RAMLO.hi
-    ; $0006 = __zeropage_usage
     ; $0006 = os_TRAMSZ
     ; $0007 = os_CMCMD
     ; $0008 = os_WARMST
@@ -961,10 +950,9 @@ tmp                            = $0084
     ; $007F = os_COUNTR.hi
     ; $0080 = __reg
     ; $0080 = __zeropage_first
-    ; $0084 = tmp
-    ; $0085 = __zeropage_last
-    ; $0085 = i
-    ; $0086 = __zeropage_end
+    ; $0084 = __zeropage_last
+    ; $0084 = i
+    ; $0085 = __zeropage_end
     ; $0200 = os_INTABS
     ; $0200 = os_INTABS.lo
     ; $0200 = os_VDSLST
@@ -1284,17 +1272,17 @@ tmp                            = $0084
     ; $2000 = segment.default.heapstart
     ; $200E = .wh__00001
     ; $2029 = .wh__00005
-    ; $2045 = .el__00010
+    ; $2041 = .el__00010
     ; $204E = .fi__00009
     ; $204E = .fi__00011
-    ; $205C = .he__00006
-    ; $206E = .ew__00004
-    ; $206E = .wh__00014
-    ; $2071 = __rwdata_start
-    ; $2071 = color_height.array
-    ; $207F = __rwdata_end
-    ; $207F = segment.default.start
-    ; $9F81 = segment.default.length
+    ; $2054 = .he__00006
+    ; $2066 = .ew__00004
+    ; $2066 = .wh__00014
+    ; $2069 = __rwdata_start
+    ; $2069 = color_height.array
+    ; $2077 = __rwdata_end
+    ; $2077 = segment.default.start
+    ; $9F89 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi
