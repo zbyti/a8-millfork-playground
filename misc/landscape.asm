@@ -22,15 +22,10 @@ main:
 ;       cursor_x = i
     LDA i
     STA $55
-    LDA #0
-    STA $56
 ; 
 ;line:25:landscape.mfk
 ;       prev_x = i
-    LDA i
     STA $5B
-    LDA #0
-    STA $5C
 ; 
 ;line:26:landscape.mfk
 ;       color = 13
@@ -118,21 +113,21 @@ main:
     JMP .wh__00014
 ; 
 ;line
-* = $2069
+* = $205f
 color_height.array:
     !byte $AA, $96, $90, $90, $7A, $7A, $6E, $6E, $5E, $5E, $56, $56, $52, $50
-.el__00010                     = $2041
-.ew__00004                     = $2066
-.fi__00009                     = $204E
-.fi__00011                     = $204E
-.he__00006                     = $2054
+.el__00010                     = $2037
+.ew__00004                     = $205C
+.fi__00009                     = $2044
+.fi__00011                     = $2044
+.he__00006                     = $204A
 .wh__00001                     = $200E
-.wh__00005                     = $2029
-.wh__00014                     = $2066
+.wh__00005                     = $201F
+.wh__00014                     = $205C
 __heap_start                   = $2000
 __reg                          = $0080
-__rwdata_end                   = $2077
-__rwdata_start                 = $2069
+__rwdata_end                   = $206D
+__rwdata_start                 = $205F
 __zeropage_end                 = $0085
 __zeropage_first               = $0080
 __zeropage_last                = $0084
@@ -157,7 +152,7 @@ antic_unuse1                   = $D408
 antic_vcount                   = $D40B
 antic_vscrol                   = $D405
 antic_wsync                    = $D40A
-color_height.array             = $2069
+color_height.array             = $205F
 gtia_colbk                     = $D01A
 gtia_colpf0                    = $D016
 gtia_colpf1                    = $D017
@@ -775,8 +770,8 @@ reset_routine_addr.lo          = $FFFC
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $2000
-segment.default.length         = $9F89
-segment.default.start          = $2077
+segment.default.length         = $9F93
+segment.default.start          = $206D
     ; $0000 = os_LINZBS
     ; $0000 = os_LNFLG
     ; $0000 = segment.default.bank
@@ -1271,18 +1266,18 @@ segment.default.start          = $2077
     ; $2000 = main
     ; $2000 = segment.default.heapstart
     ; $200E = .wh__00001
-    ; $2029 = .wh__00005
-    ; $2041 = .el__00010
-    ; $204E = .fi__00009
-    ; $204E = .fi__00011
-    ; $2054 = .he__00006
-    ; $2066 = .ew__00004
-    ; $2066 = .wh__00014
-    ; $2069 = __rwdata_start
-    ; $2069 = color_height.array
-    ; $2077 = __rwdata_end
-    ; $2077 = segment.default.start
-    ; $9F89 = segment.default.length
+    ; $201F = .wh__00005
+    ; $2037 = .el__00010
+    ; $2044 = .fi__00009
+    ; $2044 = .fi__00011
+    ; $204A = .he__00006
+    ; $205C = .ew__00004
+    ; $205C = .wh__00014
+    ; $205F = __rwdata_start
+    ; $205F = color_height.array
+    ; $206D = __rwdata_end
+    ; $206D = segment.default.start
+    ; $9F93 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi
