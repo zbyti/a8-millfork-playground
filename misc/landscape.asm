@@ -12,35 +12,39 @@ main:
     LDA #$B0
     STA $2C8
 ; 
-;line:20:landscape.mfk
-;     prev_x = 0
-    LDA #0
-    STA $5B
-    STA $5C
-; 
 ;line:21:landscape.mfk
-;     cursor_x = 0
-    STA $55
-    STA $56
-; 
-;line:23:landscape.mfk
-;     while prev_x < 80 {
-    BEQ .he__00002
+;     for i,0,to,79 {
+    LDA #0
+    STA i
 .wh__00001:
 ; 
-;line:24:landscape.mfk
+;line:22:landscape.mfk
 ;       color = 13
     LDA #$D
     STA $2FB
 ; 
-;line:25:landscape.mfk
+;line:23:landscape.mfk
 ;       prev_y = 1
     LDA #1
     STA $5A
 ; 
+;line:24:landscape.mfk
+;       cursor_x = i
+    LDA i
+    STA $55
+    LDA #0
+    STA $56
+; 
+;line:25:landscape.mfk
+;       prev_x = i
+    LDA i
+    STA $5B
+    LDA #0
+    STA $5C
+; 
 ;line:27:landscape.mfk
 ;       while color != $ff {
-    BNE .he__00006
+    BEQ .he__00006
 .wh__00005:
 ; 
 ;line:28:landscape.mfk
@@ -109,58 +113,40 @@ main:
     CMP #$FF
     BNE .wh__00005
 ; 
-;line:44:landscape.mfk
-;       cursor_x += 1
-    INC $55
-    BNE .in__00012
-    INC $56
-.in__00012:
+;line:21:landscape.mfk
+;     for i,0,to,79 {
+    LDA i
+    CMP #$4F
+    BEQ .ew__00004
+    INC i
+    JMP .wh__00001
+.ew__00004:
 ; 
 ;line:45:landscape.mfk
-;       prev_x += 1
-    INC $5B
-    BNE .in__00013
-    INC $5C
-.in__00013:
-; 
-;line:23:landscape.mfk
-;     while prev_x < 80 {
-.he__00002:
-    LDA $5C
-    BNE .cp__00014
-    LDA $5B
-    CMP #$50
-    BCC .wh__00001
-.cp__00014:
-; 
-;line:48:landscape.mfk
 ;     while true {}
-.wh__00015:
-    JMP .wh__00015
+.wh__00014:
+    JMP .wh__00014
 ; 
 ;line
-* = $2074
+* = $2071
 color_height.array:
     !byte $AA, $96, $90, $90, $7A, $7A, $6E, $6E, $5E, $5E, $56, $56, $52, $50
-.cp__00014                     = $2071
-.el__00010                     = $203D
-.fi__00009                     = $2046
-.fi__00011                     = $2046
-.he__00002                     = $2067
-.he__00006                     = $2054
-.in__00012                     = $2061
-.in__00013                     = $2067
-.wh__00001                     = $2016
-.wh__00005                     = $2021
-.wh__00015                     = $2071
+.el__00010                     = $2045
+.ew__00004                     = $206E
+.fi__00009                     = $204E
+.fi__00011                     = $204E
+.he__00006                     = $205C
+.wh__00001                     = $200E
+.wh__00005                     = $2029
+.wh__00014                     = $206E
 __heap_start                   = $2000
 __reg                          = $0080
-__rwdata_end                   = $2082
-__rwdata_start                 = $2074
-__zeropage_end                 = $0085
+__rwdata_end                   = $207F
+__rwdata_start                 = $2071
+__zeropage_end                 = $0086
 __zeropage_first               = $0080
-__zeropage_last                = $0084
-__zeropage_usage               = $0005
+__zeropage_last                = $0085
+__zeropage_usage               = $0006
 antic_chactl                   = $D401
 antic_chbase                   = $D409
 antic_dlist                    = $D402
@@ -181,7 +167,7 @@ antic_unuse1                   = $D408
 antic_vcount                   = $D40B
 antic_vscrol                   = $D405
 antic_wsync                    = $D40A
-color_height.array             = $2074
+color_height.array             = $2071
 gtia_colbk                     = $D01A
 gtia_colpf0                    = $D016
 gtia_colpf1                    = $D017
@@ -235,6 +221,7 @@ gtia_trig1                     = $D011
 gtia_trig2                     = $D012
 gtia_trig3                     = $D013
 gtia_vdelay                    = $D01C
+i                              = $0085
 irq_routine_addr               = $FFFE
 irq_routine_addr.hi            = $FFFF
 irq_routine_addr.lo            = $FFFE
@@ -798,8 +785,8 @@ reset_routine_addr.lo          = $FFFC
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $2000
-segment.default.length         = $9F7E
-segment.default.start          = $2082
+segment.default.length         = $9F81
+segment.default.start          = $207F
 tmp                            = $0084
     ; $0000 = os_LINZBS
     ; $0000 = os_LNFLG
@@ -810,8 +797,8 @@ tmp                            = $0084
     ; $0003 = os_CASINI.hi
     ; $0004 = os_RAMLO
     ; $0004 = os_RAMLO.lo
-    ; $0005 = __zeropage_usage
     ; $0005 = os_RAMLO.hi
+    ; $0006 = __zeropage_usage
     ; $0006 = os_TRAMSZ
     ; $0007 = os_CMCMD
     ; $0008 = os_WARMST
@@ -974,9 +961,10 @@ tmp                            = $0084
     ; $007F = os_COUNTR.hi
     ; $0080 = __reg
     ; $0080 = __zeropage_first
-    ; $0084 = __zeropage_last
     ; $0084 = tmp
-    ; $0085 = __zeropage_end
+    ; $0085 = __zeropage_last
+    ; $0085 = i
+    ; $0086 = __zeropage_end
     ; $0200 = os_INTABS
     ; $0200 = os_INTABS.lo
     ; $0200 = os_VDSLST
@@ -1294,22 +1282,19 @@ tmp                            = $0084
     ; $2000 = __heap_start
     ; $2000 = main
     ; $2000 = segment.default.heapstart
-    ; $2016 = .wh__00001
-    ; $2021 = .wh__00005
-    ; $203D = .el__00010
-    ; $2046 = .fi__00009
-    ; $2046 = .fi__00011
-    ; $2054 = .he__00006
-    ; $2061 = .in__00012
-    ; $2067 = .he__00002
-    ; $2067 = .in__00013
-    ; $2071 = .cp__00014
-    ; $2071 = .wh__00015
-    ; $2074 = __rwdata_start
-    ; $2074 = color_height.array
-    ; $2082 = __rwdata_end
-    ; $2082 = segment.default.start
-    ; $9F7E = segment.default.length
+    ; $200E = .wh__00001
+    ; $2029 = .wh__00005
+    ; $2045 = .el__00010
+    ; $204E = .fi__00009
+    ; $204E = .fi__00011
+    ; $205C = .he__00006
+    ; $206E = .ew__00004
+    ; $206E = .wh__00014
+    ; $2071 = __rwdata_start
+    ; $2071 = color_height.array
+    ; $207F = __rwdata_end
+    ; $207F = segment.default.start
+    ; $9F81 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi

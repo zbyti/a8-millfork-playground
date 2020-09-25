@@ -4,7 +4,7 @@ alias prev_y = os_OLDROW
 alias cursor_y = os_ROWCRS
 alias color = os_ATACHR
 
-byte tmp
+byte tmp, i
 
 array(byte) color_height = [
   170,150,144,144,122,122,110,110,94,94,86,86,82,80
@@ -17,12 +17,12 @@ void main(){
   openmode(9)
 
   os_COLOR4 = $b0
-  prev_x = 0
-  cursor_x = 0
 
-  while prev_x < 80 {
+  for i,0,to,79 {
     color = 13
     prev_y = 1
+    cursor_x = i
+    prev_x = i
 
     while color != $ff {
       cursor_y = color_height[color]
@@ -40,9 +40,6 @@ void main(){
       drawto()
       color -= 1
     }
-
-    cursor_x += 1
-    prev_x += 1
   }
 
   while true {}
