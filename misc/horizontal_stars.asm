@@ -13,13 +13,15 @@ main:
 ; 
 ;line:9:horizontal_stars.mfk
 ;     for i:stars {
-    LDY #0
+    LDA #0
+    STA main$i
 .do__00001:
 ; 
 ;line:10:horizontal_stars.mfk
 ;       stars[i] = pokey_random
     LDA $D20A
-    STA main$stars.array, Y
+    LDX main$i
+    STA main$stars.array, X
 ; 
 ;line:11:horizontal_stars.mfk
 ;       speed[i] = (pokey_random & 3) + 1
@@ -27,11 +29,11 @@ main:
     AND #3
     CLC
     ADC #1
-    STA main$speed.array, Y
+    STA main$speed.array, X
 ; 
 ;line:9:horizontal_stars.mfk
 ;     for i:stars {
-    INY
+    INC main$i
     BNE .do__00001
 ; 
 ;line:14:horizontal_stars.mfk
@@ -45,28 +47,29 @@ main:
 ; 
 ;line:16:horizontal_stars.mfk
 ;         for i:stars {
+    STA main$i
 .do__00008:
 ; 
 ;line:17:horizontal_stars.mfk
-;           antic_wsync = 1
-    LDA #1
-    STA $D40A
+;           antic_wsync = i
+    LDX main$i
+    STX $D40A
 ; 
 ;line:18:horizontal_stars.mfk
 ;           gtia_hposm0 = stars[i]
-    LDA main$stars.array, Y
+    LDA main$stars.array, X
     STA $D004
 ; 
 ;line:19:horizontal_stars.mfk
 ;           stars[i] += speed[i]
-    LDA main$speed.array, Y
+    LDA main$speed.array, X
     CLC
-    ADC main$stars.array, Y
-    STA main$stars.array, Y
+    ADC main$stars.array, X
+    STA main$stars.array, X
 ; 
 ;line:16:horizontal_stars.mfk
 ;         for i:stars {
-    INY
+    INC main$i
     BNE .do__00008
 ; 
 ;line:15:horizontal_stars.mfk
@@ -78,10 +81,10 @@ main:
     JMP .wh__00004
 ; 
 ;line
-.do__00001                     = $200A
-.do__00008                     = $2023
-.fi__00011                     = $203B
-.wh__00004                     = $201E
+.do__00001                     = $200C
+.do__00008                     = $202A
+.fi__00011                     = $2043
+.wh__00004                     = $2023
 __heap_start                   = $2300
 __reg                          = $0080
 __rwdata_end                   = $0000
@@ -729,8 +732,8 @@ reset_routine_addr.lo          = $FFFC
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $2300
-segment.default.length         = $9FC2
-segment.default.start          = $203E
+segment.default.length         = $9FBA
+segment.default.start          = $2046
     ; $0000 = __rwdata_end
     ; $0000 = __rwdata_start
     ; $0000 = os_LINZBS
@@ -1224,16 +1227,16 @@ segment.default.start          = $203E
     ; $0580 = os_LBUFF
     ; $0700 = os_INIML
     ; $2000 = main
-    ; $200A = .do__00001
-    ; $201E = .wh__00004
-    ; $2023 = .do__00008
-    ; $203B = .fi__00011
-    ; $203E = segment.default.start
+    ; $200C = .do__00001
+    ; $2023 = .wh__00004
+    ; $202A = .do__00008
+    ; $2043 = .fi__00011
+    ; $2046 = segment.default.start
     ; $2100 = main$stars.array
     ; $2200 = main$speed.array
     ; $2300 = __heap_start
     ; $2300 = segment.default.heapstart
-    ; $9FC2 = segment.default.length
+    ; $9FBA = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi

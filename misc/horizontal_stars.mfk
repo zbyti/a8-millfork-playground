@@ -14,7 +14,7 @@ void main(){
   while true {
     if antic_vcount == 0 {
       for i:stars {
-        antic_wsync = 1
+        antic_wsync = i
         gtia_hposm0 = stars[i]
         stars[i] += speed[i]
       }
