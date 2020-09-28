@@ -28,12 +28,11 @@ void main(){
 
     while color != $ff {
       cursor_y = color_height[color]
-      if (pokey_random & 1) != 0 {
+      if pokey_random < $80 {
+        color_height[color] -= 1
+      }
+      if pokey_random <  $80 {
         color_height[color] += 1
-      } else {
-        if (pokey_random & 1) != 0 {
-          color_height[color] -= 1
-        }
       }
       drawto()
       color -= 1
