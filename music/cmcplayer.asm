@@ -285,61 +285,61 @@ player.array:
 * = $2000
 main:
 ; 
-;line:10:cmcplayer.mfk
+;line:8:cmcplayer.mfk
 ;     comm($70,0,ADDRMUS.hi)
     LDA #$70
     LDY #$A0
     LDX #0
     JSR $B003
 ; 
-;line:11:cmcplayer.mfk
+;line:9:cmcplayer.mfk
 ;     comm(0,0,0)
     LDA #0
     TAY
     TAX
     JSR $B003
 ; 
-;line:12:cmcplayer.mfk
+;line:10:cmcplayer.mfk
 ;     while os_CH == $ff {
     JMP .he__00002
 .wh__00001:
 ; 
-;line:13:cmcplayer.mfk
+;line:11:cmcplayer.mfk
 ;       if antic_vcount == $10 {
     LDA $D40B
     CMP #$10
     BNE .fi__00005
 ; 
-;line:14:cmcplayer.mfk
+;line:12:cmcplayer.mfk
 ;         antic_wsync = $e
     LDA #$E
     STA $D40A
 ; 
-;line:15:cmcplayer.mfk
+;line:13:cmcplayer.mfk
 ;         gtia_colbk = $e
     STA $D01A
 ; 
-;line:16:cmcplayer.mfk
+;line:14:cmcplayer.mfk
 ;         takt()
     JSR $B006
 ; 
-;line:17:cmcplayer.mfk
+;line:15:cmcplayer.mfk
 ;         gtia_colbk = 0
     LDA #0
     STA $D01A
 ; 
-;line:13:cmcplayer.mfk
+;line:11:cmcplayer.mfk
 ;       if antic_vcount == $10 {
 .fi__00005:
 ; 
-;line:12:cmcplayer.mfk
+;line:10:cmcplayer.mfk
 ;     while os_CH == $ff {
 .he__00002:
     LDA $2FC
     CMP #$FF
     BEQ .wh__00001
 ; 
-;line:20:cmcplayer.mfk
+;line:18:cmcplayer.mfk
 ;     comm($40,0,0)
     LDA #$40
     LDY #0
@@ -1000,7 +1000,6 @@ segment.default.end            = $BFFF
 segment.default.heapstart      = $2000
 segment.default.length         = $9FC6
 segment.default.start          = $203A
-stop                           = $B62D
     ; $0000 = __rwdata_end
     ; $0000 = __rwdata_start
     ; $0000 = os_LINZBS
@@ -1504,7 +1503,6 @@ stop                           = $B62D
     ; $A000 = music.first
     ; $B000 = player.array
     ; $B000 = player.first
-    ; $B62D = stop
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi
