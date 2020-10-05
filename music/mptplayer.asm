@@ -314,7 +314,7 @@ player.array:
 main:
 ; 
 ;line:10:mptplayer.mfk
-;     comm(0,ADDRMUS.hi,0)
+;     comm(0,ADDRMUS.hi,ADDRMUS.lo)
     LDA #0
     TAY
     LDX #$A0

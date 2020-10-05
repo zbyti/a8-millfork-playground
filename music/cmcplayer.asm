@@ -286,7 +286,7 @@ player.array:
 main:
 ; 
 ;line:8:cmcplayer.mfk
-;     comm($70,0,ADDRMUS.hi)
+;     comm($70,ADDRMUS.lo,ADDRMUS.hi)
     LDA #$70
     LDY #$A0
     LDX #0
