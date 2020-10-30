@@ -2,25 +2,25 @@
 * = $2000
 main:
 ; 
-;line:39:montecarlo_pi_benchmark.mfk
+;line:38:montecarlo_pi_benchmark.mfk
 ;     screen = os_SAVMSC
     LDA $59
     STA $81
     LDA $58
     STA $80
 ; 
-;line:41:montecarlo_pi_benchmark.mfk
+;line:40:montecarlo_pi_benchmark.mfk
 ;     x = 0
     LDA #0
     STA $E4
     STA $E5
 ; 
-;line:42:montecarlo_pi_benchmark.mfk
+;line:41:montecarlo_pi_benchmark.mfk
 ;     y = 0
     STA $E6
     STA $E7
 ; 
-;line:43:montecarlo_pi_benchmark.mfk
+;line:42:montecarlo_pi_benchmark.mfk
 ;     bingo = 0
     STA $E2
     STA $E3
@@ -41,33 +41,33 @@ main:
 ;     beq .rt_check
     BEQ .ai__00027pause$.rt_check
 ; 
-;line:46:montecarlo_pi_benchmark.mfk
+;line:45:montecarlo_pi_benchmark.mfk
 ;     os_RTCLOK = 0
     LDA #0
     STA $12
     STA $13
     STA $14
 ; 
-;line:48:montecarlo_pi_benchmark.mfk
+;line:47:montecarlo_pi_benchmark.mfk
 ;     for i,0,to,probe {
     STA $E0
     STA $E1
 .wh__00011:
 ; 
-;line:49:montecarlo_pi_benchmark.mfk
+;line:48:montecarlo_pi_benchmark.mfk
 ;       n = pokey_random & 127
     LDA $D20A
     AND #$7F
 ; 
-;line:50:montecarlo_pi_benchmark.mfk
+;line:49:montecarlo_pi_benchmark.mfk
 ;       x = n * word(n)
     STA __reg + 2
 ; 
-;line:49:montecarlo_pi_benchmark.mfk
+;line:48:montecarlo_pi_benchmark.mfk
 ;       n = pokey_random & 127
     STA $82
 ; 
-;line:50:montecarlo_pi_benchmark.mfk
+;line:49:montecarlo_pi_benchmark.mfk
 ;       x = n * word(n)
     STA __reg
     LDA #0
@@ -76,20 +76,20 @@ main:
     STA $E4
     STX $E5
 ; 
-;line:51:montecarlo_pi_benchmark.mfk
+;line:50:montecarlo_pi_benchmark.mfk
 ;       n = pokey_random & 127
     LDA $D20A
     AND #$7F
 ; 
-;line:52:montecarlo_pi_benchmark.mfk
+;line:51:montecarlo_pi_benchmark.mfk
 ;       y = n * word(n)
     STA __reg + 2
 ; 
-;line:51:montecarlo_pi_benchmark.mfk
+;line:50:montecarlo_pi_benchmark.mfk
 ;       n = pokey_random & 127
     STA $82
 ; 
-;line:52:montecarlo_pi_benchmark.mfk
+;line:51:montecarlo_pi_benchmark.mfk
 ;       y = n * word(n)
     STA __reg
     LDA #0
@@ -98,7 +98,7 @@ main:
     STA $E6
     STX $E7
 ; 
-;line:53:montecarlo_pi_benchmark.mfk
+;line:52:montecarlo_pi_benchmark.mfk
 ;       if ((x + y) <= radius) {
     CLC
     ADC $E4
@@ -115,18 +115,18 @@ main:
     BCC .fi__00016
 .cp__00017:
 ; 
-;line:54:montecarlo_pi_benchmark.mfk
+;line:53:montecarlo_pi_benchmark.mfk
 ;         bingo += 1
     INC $E2
     BNE .in__00015
     INC $E3
 .in__00015:
 ; 
-;line:53:montecarlo_pi_benchmark.mfk
+;line:52:montecarlo_pi_benchmark.mfk
 ;       if ((x + y) <= radius) {
 .fi__00016:
 ; 
-;line:48:montecarlo_pi_benchmark.mfk
+;line:47:montecarlo_pi_benchmark.mfk
 ;     for i,0,to,probe {
     LDA $E0
     CMP #$F
@@ -142,7 +142,7 @@ main:
     JMP .wh__00011
 .ew__00014:
 ; 
-;line:57:montecarlo_pi_benchmark.mfk
+;line:56:montecarlo_pi_benchmark.mfk
 ;     p = 4 * bingo
     LDA $E2
     ASL
@@ -156,33 +156,33 @@ main:
     STA $E8
     LDA $13
 ; 
-;line:59:montecarlo_pi_benchmark.mfk
+;line:58:montecarlo_pi_benchmark.mfk
 ;     t = os_RTCLOK.b2 + (os_RTCLOK.b1 * 256)
     STA __reg + 1
     LDA $14
 ; 
-;line:61:montecarlo_pi_benchmark.mfk
+;line:60:montecarlo_pi_benchmark.mfk
 ;     printScore(t)
     STA printScore$val
 ; 
-;line:59:montecarlo_pi_benchmark.mfk
+;line:58:montecarlo_pi_benchmark.mfk
 ;     t = os_RTCLOK.b2 + (os_RTCLOK.b1 * 256)
     STA $EA
     LDA __reg + 1
 ; 
-;line:61:montecarlo_pi_benchmark.mfk
+;line:60:montecarlo_pi_benchmark.mfk
 ;     printScore(t)
     STA printScore$val + 1
 ; 
-;line:59:montecarlo_pi_benchmark.mfk
+;line:58:montecarlo_pi_benchmark.mfk
 ;     t = os_RTCLOK.b2 + (os_RTCLOK.b1 * 256)
     STA $EB
 ; 
-;line:61:montecarlo_pi_benchmark.mfk
+;line:60:montecarlo_pi_benchmark.mfk
 ;     printScore(t)
     JSR printScore
 ; 
-;line:62:montecarlo_pi_benchmark.mfk
+;line:61:montecarlo_pi_benchmark.mfk
 ;     printScore(p)
     LDA $E8
     STA printScore$val
@@ -190,7 +190,7 @@ main:
     STA printScore$val + 1
     JSR printScore
 ; 
-;line:64:montecarlo_pi_benchmark.mfk
+;line:63:montecarlo_pi_benchmark.mfk
 ;     while true {}
 .wh__00023:
     JMP .wh__00023
