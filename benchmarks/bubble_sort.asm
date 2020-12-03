@@ -80,8 +80,6 @@ main:
 ; 
 ;line:46:bubble_sort.mfk
 ;           sorttable[i] = n2
-    LDA $82
-    LDY $80
     STA sorttable.array, Y
 ; 
 ;line:47:bubble_sort.mfk
@@ -150,7 +148,7 @@ main:
 ; 
 ;line
  
-* = $2082
+* = $207e
 printScore:
 ; 
 ;line:18:bubble_sort.mfk
@@ -181,7 +179,6 @@ printScore:
 ; 
 ;line:22:bubble_sort.mfk
 ;         screen[0] = tmp[iter] + $10
-    LDA printScore$tmp.array, X
     ADC #$10
 ; 
 ;line:21:bubble_sort.mfk
@@ -253,18 +250,18 @@ sorttable.array:
     !byte $1F, $1E, $1D, $1C, $1B, $1A, $19, $18, $17, $16, $15, $14, $13, $12, $11, $10
     !byte $F, $E, $D, $C, $B, $A, 9, 8, 7, 6, 5, 4, 3, 2, 1
 .ai__00030pause$.rt_check      = $201E
-.do__00003                     = $2090
+.do__00003                     = $208C
 .do__00010                     = $200C
 .do__00013                     = $2029
-.do__00023                     = $206A
-.el__00006                     = $209F
-.ew__00019                     = $2056
-.fi__00007                     = $20A5
-.fi__00020                     = $204B
-.in__00008                     = $20AF
-.in__00009                     = $20BD
+.do__00023                     = $2066
+.el__00006                     = $2098
+.ew__00019                     = $2052
+.fi__00007                     = $209E
+.fi__00020                     = $2047
+.in__00008                     = $20A8
+.in__00009                     = $20B6
 .wh__00016                     = $202F
-.wh__00026                     = $207F
+.wh__00026                     = $207B
 __heap_start                   = $2000
 __reg                          = $0086
 __rwdata_end                   = $21FF
@@ -906,7 +903,7 @@ pokey_stimer                   = $D209
 pokey_unuse1                   = $D20C
 pokey_unuse2                   = $D20B
 pokey_unuse3                   = $D20C
-printScore                     = $2082
+printScore                     = $207E
 printScore$iter                = $008A
 printScore$tmp.array           = $008C
 printScore$val                 = $008B
@@ -1429,16 +1426,16 @@ t                              = $0083
     ; $201E = .ai__00030pause$.rt_check
     ; $2029 = .do__00013
     ; $202F = .wh__00016
-    ; $204B = .fi__00020
-    ; $2056 = .ew__00019
-    ; $206A = .do__00023
-    ; $207F = .wh__00026
-    ; $2082 = printScore
-    ; $2090 = .do__00003
-    ; $209F = .el__00006
-    ; $20A5 = .fi__00007
-    ; $20AF = .in__00008
-    ; $20BD = .in__00009
+    ; $2047 = .fi__00020
+    ; $2052 = .ew__00019
+    ; $2066 = .do__00023
+    ; $207B = .wh__00026
+    ; $207E = printScore
+    ; $208C = .do__00003
+    ; $2098 = .el__00006
+    ; $209E = .fi__00007
+    ; $20A8 = .in__00008
+    ; $20B6 = .in__00009
     ; $2100 = __rwdata_start
     ; $2100 = sorttable.array
     ; $21FF = __rwdata_end

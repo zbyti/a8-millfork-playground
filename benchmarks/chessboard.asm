@@ -2,68 +2,68 @@
 * = $2000
 main:
 ; 
-;line:95:chessboard.mfk
-;       count = 0
+;line:96:chessboard.mfk
+;     count = 0
     LDA #0
     STA $E6
 ; 
 ;line:46:chessboard.mfk
-;       LDA os_RTCLOK.b2
+;     LDA os_RTCLOK.b2
     LDA $14
 ; 
 ;line:47:chessboard.mfk
-;       .rt_check:
+;     .rt_check:
 .ai__00030pause$.rt_check:
 ; 
 ;line:48:chessboard.mfk
-;       CMP os_RTCLOK.b2
+;     CMP os_RTCLOK.b2
     CMP $14
 ; 
 ;line:49:chessboard.mfk
-;       BEQ .rt_check
+;     BEQ .rt_check
     BEQ .ai__00030pause$.rt_check
 ; 
-;line:98:chessboard.mfk
-;       os_RTCLOK.b2 = 0
+;line:99:chessboard.mfk
+;     os_RTCLOK.b2 = 0
     LDA #0
     STA $14
 ; 
-;line:100:chessboard.mfk
-;       while os_RTCLOK.b2 < 150 {
+;line:101:chessboard.mfk
+;     while os_RTCLOK.b2 < 150 {
     BEQ .he__00023
 .wh__00022:
 ; 
-;line:101:chessboard.mfk
-;           drawBoard()
+;line:102:chessboard.mfk
+;       drawBoard()
     JSR drawBoard
 ; 
-;line:102:chessboard.mfk
-;           count += 1
+;line:103:chessboard.mfk
+;       count += 1
     INC $E6
 ; 
-;line:100:chessboard.mfk
-;       while os_RTCLOK.b2 < 150 {
+;line:101:chessboard.mfk
+;     while os_RTCLOK.b2 < 150 {
 .he__00023:
     LDA $14
     CMP #$96
     BCC .wh__00022
 ; 
-;line:57:chessboard.mfk
-;       screen = lmsAddr1
+;line:58:chessboard.mfk
+;     screen = lmsAddr1
     LDA #0
     STA $E8
     LDA #$84
     STA $E9
 ; 
-;line:58:chessboard.mfk
-;       os_SDLST = dlPrint.addr
+;line:59:chessboard.mfk
+;     os_SDLST = dlPrint.addr
     LDA #lo(dlPrint)
     STA $230
     LDA #hi(dlPrint)
     STA $231
 ; 
-;line:60:chessboard.mfk
-;       tmp[0] = count >> 4
+;line:61:chessboard.mfk
+;     tmp[0] = count >> 4
     LDA $E6
     LSR
     LSR
@@ -71,116 +71,115 @@ main:
     LSR
     STA printScore$tmp.array
 ; 
-;line:61:chessboard.mfk
-;       tmp[1] = count & %00001111
+;line:62:chessboard.mfk
+;     tmp[1] = count & %00001111
     LDA $E6
     AND #$F
     STA printScore$tmp.array + 1
 ; 
-;line:63:chessboard.mfk
-;       for iter:tmp {
+;line:64:chessboard.mfk
+;     for iter:tmp {
     LDY #0
 .ai__00031.do__00017:
 ; 
-;line:64:chessboard.mfk
-;           if tmp[iter] < 10 {
+;line:65:chessboard.mfk
+;       if tmp[iter] < 10 {
     LDA printScore$tmp.array, Y
     CMP #$A
     BCS .ai__00031.el__00020
 ; 
-;line:65:chessboard.mfk
-;               screen[iter] = tmp[iter] + $10
-    LDA printScore$tmp.array, Y
+;line:66:chessboard.mfk
+;         screen[iter] = tmp[iter] + $10
     ADC #$10
 ; 
-;line:64:chessboard.mfk
-;           if tmp[iter] < 10 {
+;line:65:chessboard.mfk
+;       if tmp[iter] < 10 {
     JMP .ai__00031.fi__00021
 .ai__00031.el__00020:
 ; 
-;line:67:chessboard.mfk
-;               screen[iter] = tmp[iter] + $17
+;line:68:chessboard.mfk
+;         screen[iter] = tmp[iter] + $17
     LDA printScore$tmp.array, Y
     CLC
     ADC #$17
 ; 
-;line:64:chessboard.mfk
-;           if tmp[iter] < 10 {
+;line:65:chessboard.mfk
+;       if tmp[iter] < 10 {
 .ai__00031.fi__00021:
 ; 
-;line:65:chessboard.mfk
-;               screen[iter] = tmp[iter] + $10
+;line:66:chessboard.mfk
+;         screen[iter] = tmp[iter] + $10
     STA ($E8), Y
 ; 
-;line:63:chessboard.mfk
-;       for iter:tmp {
+;line:64:chessboard.mfk
+;     for iter:tmp {
     INY
     CPY #2
     BNE .ai__00031.do__00017
 ; 
-;line:107:chessboard.mfk
-;       while (true){}
+;line:108:chessboard.mfk
+;     while (true){}
 .wh__00026:
     BEQ .wh__00026
 ; 
 ;line
  
-* = $205b
+* = $2058
 drawBoard:
 ; 
-;line:73:chessboard.mfk
-;       screen = lmsAddr2
+;line:74:chessboard.mfk
+;     screen = lmsAddr2
     LDA #$10
     STA $E8
     LDA #$60
     STA $E9
 ; 
-;line:74:chessboard.mfk
-;       os_SDLST = dl.addr
+;line:75:chessboard.mfk
+;     os_SDLST = dl.addr
     LDA #0
     STA $230
     LDA #hi(dl)
     STA $231
 ; 
-;line:76:chessboard.mfk
-;       for i,7,downto,0 {
+;line:77:chessboard.mfk
+;     for i,7,downto,0 {
     LDA #8
     STA $E0
 .do__00001:
     DEC $E0
 ; 
-;line:77:chessboard.mfk
-;           for j,23,downto,0 {
+;line:78:chessboard.mfk
+;       for j,23,downto,0 {
     LDA #$18
     STA $E2
 .do__00004:
     DEC $E2
 ; 
-;line:78:chessboard.mfk
-;               for k,3,downto,0 {
+;line:79:chessboard.mfk
+;         for k,3,downto,0 {
     LDA #4
     STA $E4
 .do__00007:
     DEC $E4
 ; 
-;line:79:chessboard.mfk
-;                   screen[0] = 255
+;line:80:chessboard.mfk
+;           screen[0] = 255
     LDA #$FF
     LDY #0
     STA ($E8), Y
 ; 
-;line:80:chessboard.mfk
-;                   screen[1] = 255
-    INY
-    STA ($E8), Y
-; 
 ;line:81:chessboard.mfk
-;                   screen[2] = 255
+;           screen[1] = 255
     INY
     STA ($E8), Y
 ; 
 ;line:82:chessboard.mfk
-;                   screen += 6
+;           screen[2] = 255
+    INY
+    STA ($E8), Y
+; 
+;line:83:chessboard.mfk
+;           screen += 6
     CLC
     LDA $E8
     ADC #6
@@ -189,13 +188,13 @@ drawBoard:
     INC $E9
 .ah__00012:
 ; 
-;line:78:chessboard.mfk
-;               for k,3,downto,0 {
+;line:79:chessboard.mfk
+;         for k,3,downto,0 {
     LDA $E4
     BNE .do__00007
 ; 
-;line:84:chessboard.mfk
-;               screen += 16
+;line:85:chessboard.mfk
+;         screen += 16
     CLC
     LDA $E8
     ADC #$10
@@ -204,19 +203,19 @@ drawBoard:
     INC $E9
 .ah__00013:
 ; 
-;line:77:chessboard.mfk
-;           for j,23,downto,0 {
+;line:78:chessboard.mfk
+;       for j,23,downto,0 {
     LDA $E2
     BNE .do__00004
 ; 
-;line:86:chessboard.mfk
-;           if (i & 1) != 0 {
+;line:87:chessboard.mfk
+;       if (i & 1) != 0 {
     LDA $E0
     AND #1
     BEQ .el__00010
 ; 
-;line:87:chessboard.mfk
-;               screen += 3
+;line:88:chessboard.mfk
+;         screen += 3
     CLC
     LDA $E8
     ADC #3
@@ -225,13 +224,13 @@ drawBoard:
     INC $E9
 .ah__00014:
 ; 
-;line:86:chessboard.mfk
-;           if (i & 1) != 0 {
+;line:87:chessboard.mfk
+;       if (i & 1) != 0 {
     JMP .fi__00011
 .el__00010:
 ; 
-;line:89:chessboard.mfk
-;               screen -= 3
+;line:90:chessboard.mfk
+;         screen -= 3
     SEC
     LDA $E8
     SBC #3
@@ -240,12 +239,12 @@ drawBoard:
     SBC #0
     STA $E9
 ; 
-;line:86:chessboard.mfk
-;           if (i & 1) != 0 {
+;line:87:chessboard.mfk
+;       if (i & 1) != 0 {
 .fi__00011:
 ; 
-;line:76:chessboard.mfk
-;       for i,7,downto,0 {
+;line:77:chessboard.mfk
+;     for i,7,downto,0 {
     LDA $E0
     BNE .do__00001
     ; DISCARD_AF
@@ -272,21 +271,21 @@ dl.array:
 * = $20d0
 dlPrint.array:
     !byte $70, $70, $70, $42, 0, $84, $41, lo(dlPrint), hi(dlPrint)
-.ah__00012                     = $2096
-.ah__00013                     = $20A5
-.ah__00014                     = $20BA
+.ah__00012                     = $2093
+.ah__00013                     = $20A2
+.ah__00014                     = $20B7
 .ai__00030pause$.rt_check      = $2006
 .ai__00031.do__00017           = $203D
-.ai__00031.el__00020           = $204C
-.ai__00031.fi__00021           = $2052
-.do__00001                     = $2071
-.do__00004                     = $2077
-.do__00007                     = $207D
-.el__00010                     = $20BD
-.fi__00011                     = $20CA
+.ai__00031.el__00020           = $2049
+.ai__00031.fi__00021           = $204F
+.do__00001                     = $206E
+.do__00004                     = $2074
+.do__00007                     = $207A
+.el__00010                     = $20BA
+.fi__00011                     = $20C7
 .he__00023                     = $2015
 .wh__00022                     = $2010
-.wh__00026                     = $2059
+.wh__00026                     = $2056
 __heap_start                   = $2000
 __reg                          = $0080
 __rwdata_end                   = $0000
@@ -318,7 +317,7 @@ antic_wsync                    = $D40A
 count                          = $00E6
 dl.array                       = $2100
 dlPrint.array                  = $20D0
-drawBoard                      = $205B
+drawBoard                      = $2058
 gtia_colbk                     = $D01A
 gtia_colpf0                    = $D016
 gtia_colpf1                    = $D017
@@ -1452,18 +1451,18 @@ segment.default.start          = $20D9
     ; $2010 = .wh__00022
     ; $2015 = .he__00023
     ; $203D = .ai__00031.do__00017
-    ; $204C = .ai__00031.el__00020
-    ; $2052 = .ai__00031.fi__00021
-    ; $2059 = .wh__00026
-    ; $205B = drawBoard
-    ; $2071 = .do__00001
-    ; $2077 = .do__00004
-    ; $207D = .do__00007
-    ; $2096 = .ah__00012
-    ; $20A5 = .ah__00013
-    ; $20BA = .ah__00014
-    ; $20BD = .el__00010
-    ; $20CA = .fi__00011
+    ; $2049 = .ai__00031.el__00020
+    ; $204F = .ai__00031.fi__00021
+    ; $2056 = .wh__00026
+    ; $2058 = drawBoard
+    ; $206E = .do__00001
+    ; $2074 = .do__00004
+    ; $207A = .do__00007
+    ; $2093 = .ah__00012
+    ; $20A2 = .ah__00013
+    ; $20B7 = .ah__00014
+    ; $20BA = .el__00010
+    ; $20C7 = .fi__00011
     ; $20D0 = dlPrint.array
     ; $20D9 = segment.default.start
     ; $2100 = dl.array

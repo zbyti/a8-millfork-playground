@@ -36,9 +36,21 @@ main:
     LDA $B0
     JSR $EF9C
 ; 
-;line:61:grand_theft_antic.mfk
-;       pause()
-    JSR pause
+;line:8:grand_theft_antic.mfk
+;     lda os_RTCLOK.b2
+    LDA $14
+; 
+;line:9:grand_theft_antic.mfk
+;     .rt_check:
+.ai__00039pause$.rt_check:
+; 
+;line:10:grand_theft_antic.mfk
+;     cmp os_RTCLOK.b2
+    CMP $14
+; 
+;line:11:grand_theft_antic.mfk
+;     beq .rt_check
+    BEQ .ai__00039pause$.rt_check
 ; 
 ;line:62:grand_theft_antic.mfk
 ;       os_RTCLOK.b2 = 0
@@ -96,9 +108,21 @@ main:
     LDA #$10
     STA $B0
 ; 
-;line:70:grand_theft_antic.mfk
-;     pause()
-    JSR pause
+;line:8:grand_theft_antic.mfk
+;     lda os_RTCLOK.b2
+    LDA $14
+; 
+;line:9:grand_theft_antic.mfk
+;     .rt_check:
+.ai__00040pause$.rt_check:
+; 
+;line:10:grand_theft_antic.mfk
+;     cmp os_RTCLOK.b2
+    CMP $14
+; 
+;line:11:grand_theft_antic.mfk
+;     beq .rt_check
+    BEQ .ai__00040pause$.rt_check
 ; 
 ;line:71:grand_theft_antic.mfk
 ;     os_RTCLOK.b2 = 0
@@ -143,28 +167,24 @@ main:
     STA $22F
 ; 
 ;line:77:grand_theft_antic.mfk
-;     pause()
-    JSR pause
-; 
-;line:78:grand_theft_antic.mfk
 ;     openmode(0)
     LDA #0
     JSR $EF9C
 ; 
-;line:79:grand_theft_antic.mfk
+;line:78:grand_theft_antic.mfk
 ;     screen = os_SAVMSC
     LDA $59
     STA $B3
     LDA $58
     STA $B2
 ; 
-;line:81:grand_theft_antic.mfk
+;line:80:grand_theft_antic.mfk
 ;     for i:scores {
     LDA #0
     STA $B0
 .do__00032:
 ; 
-;line:82:grand_theft_antic.mfk
+;line:81:grand_theft_antic.mfk
 ;       printScore(scores[i])
     LDA $B0
     ASL
@@ -175,21 +195,21 @@ main:
     STA printScore$val + 1
     JSR printScore
 ; 
-;line:81:grand_theft_antic.mfk
+;line:80:grand_theft_antic.mfk
 ;     for i:scores {
     INC $B0
     LDA $B0
     CMP #$11
     BNE .do__00032
 ; 
-;line:85:grand_theft_antic.mfk
+;line:84:grand_theft_antic.mfk
 ;     while true {}
 .wh__00035:
     BEQ .wh__00035
 ; 
 ;line
  
-* = $20c0
+* = $20c3
 printScore:
 ; 
 ;line:20:grand_theft_antic.mfk
@@ -235,7 +255,6 @@ printScore:
 ; 
 ;line:27:grand_theft_antic.mfk
 ;         screen[iter] = tmp[iter] + $10
-    LDA printScore$tmp.array, Y
     ADC #$10
 ; 
 ;line:26:grand_theft_antic.mfk
@@ -301,7 +320,6 @@ printScore:
 ; 
 ;line:39:grand_theft_antic.mfk
 ;         screen[8] = i + $10
-    LDA $B0
     ADC #$10
 ; 
 ;line:38:grand_theft_antic.mfk
@@ -371,48 +389,25 @@ printScore:
     RTS
 ; 
 ;line
- 
-* = $214b
-pause:
-; 
-;line:8:grand_theft_antic.mfk
-;     lda os_RTCLOK.b2
-    LDA $14
-; 
-;line:9:grand_theft_antic.mfk
-;     .rt_check:
-pause$.rt_check:
-; 
-;line:10:grand_theft_antic.mfk
-;     cmp os_RTCLOK.b2
-    CMP $14
-; 
-;line:11:grand_theft_antic.mfk
-;     beq .rt_check
-    BEQ pause$.rt_check
-; 
-;line:12:grand_theft_antic.mfk
-;     rts
-    RTS
-; 
-;line
-.ah__00014                     = $214A
-.do__00005                     = $20DE
+.ah__00014                     = $2148
+.ai__00039pause$.rt_check      = $2024
+.ai__00040pause$.rt_check      = $2066
+.do__00005                     = $20E1
 .do__00015                     = $2004
-.do__00032                     = $20A5
+.do__00032                     = $20A8
 .el__00008                     = $20ED
-.el__00010                     = $2122
-.el__00012                     = $212C
-.ew__00021                     = $2058
+.el__00010                     = $2120
+.el__00012                     = $212A
+.ew__00021                     = $205B
 .fi__00009                     = $20F3
-.fi__00011                     = $2127
-.fi__00013                     = $213F
-.he__00023                     = $2047
-.he__00029                     = $2086
+.fi__00011                     = $2125
+.fi__00013                     = $213D
+.he__00023                     = $204A
+.he__00029                     = $208C
 .wh__00018                     = $201D
-.wh__00022                     = $202B
-.wh__00028                     = $206A
-.wh__00035                     = $20BE
+.wh__00022                     = $202E
+.wh__00028                     = $2070
+.wh__00035                     = $20C1
 __heap_start                   = $2000
 __reg                          = $00A2
 __rwdata_end                   = $0000
@@ -1016,8 +1011,6 @@ os_ZLOADA.lo                   = $02D3
 os_ZSBA                        = $0047
 os_ZSBA.hi                     = $0048
 os_ZSBA.lo                     = $0047
-pause                          = $214B
-pause$.rt_check                = $214D
 pia_pactl                      = $D302
 pia_pbctl                      = $D303
 pia_porta                      = $D300
@@ -1054,7 +1047,7 @@ pokey_stimer                   = $D209
 pokey_unuse1                   = $D20C
 pokey_unuse2                   = $D20B
 pokey_unuse3                   = $D20C
-printScore                     = $20C0
+printScore                     = $20C3
 printScore$iter                = $00A6
 printScore$tmp.array           = $00A9
 printScore$val                 = $00A7
@@ -1069,8 +1062,8 @@ screen.lo                      = $00B2
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $2000
-segment.default.length         = $9EAE
-segment.default.start          = $2152
+segment.default.length         = $9EB7
+segment.default.start          = $2149
     ; $0000 = __rwdata_end
     ; $0000 = __rwdata_start
     ; $0000 = os_LINZBS
@@ -1576,26 +1569,26 @@ segment.default.start          = $2152
     ; $2000 = segment.default.heapstart
     ; $2004 = .do__00015
     ; $201D = .wh__00018
-    ; $202B = .wh__00022
-    ; $2047 = .he__00023
-    ; $2058 = .ew__00021
-    ; $206A = .wh__00028
-    ; $2086 = .he__00029
-    ; $20A5 = .do__00032
-    ; $20BE = .wh__00035
-    ; $20C0 = printScore
-    ; $20DE = .do__00005
+    ; $2024 = .ai__00039pause$.rt_check
+    ; $202E = .wh__00022
+    ; $204A = .he__00023
+    ; $205B = .ew__00021
+    ; $2066 = .ai__00040pause$.rt_check
+    ; $2070 = .wh__00028
+    ; $208C = .he__00029
+    ; $20A8 = .do__00032
+    ; $20C1 = .wh__00035
+    ; $20C3 = printScore
+    ; $20E1 = .do__00005
     ; $20ED = .el__00008
     ; $20F3 = .fi__00009
-    ; $2122 = .el__00010
-    ; $2127 = .fi__00011
-    ; $212C = .el__00012
-    ; $213F = .fi__00013
-    ; $214A = .ah__00014
-    ; $214B = pause
-    ; $214D = pause$.rt_check
-    ; $2152 = segment.default.start
-    ; $9EAE = segment.default.length
+    ; $2120 = .el__00010
+    ; $2125 = .fi__00011
+    ; $212A = .el__00012
+    ; $213D = .fi__00013
+    ; $2148 = .ah__00014
+    ; $2149 = segment.default.start
+    ; $9EB7 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi

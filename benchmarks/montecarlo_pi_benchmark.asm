@@ -324,7 +324,6 @@ printScore:
 ; 
 ;line:25:montecarlo_pi_benchmark.mfk
 ;         screen[iter] = tmp[iter] + $10
-    LDA printScore$tmp.array, Y
     ADC #$10
 ; 
 ;line:24:montecarlo_pi_benchmark.mfk
@@ -367,14 +366,14 @@ printScore:
     RTS
 ; 
 ;line
-.ah__00010                     = $2119
+.ah__00010                     = $2116
 .ai__00027pause$.rt_check      = $2018
 .cp__00017                     = $206D
 .do__00005                     = $20F2
-.el__00008                     = $2101
+.el__00008                     = $20FE
 .el__00019                     = $207F
 .ew__00014                     = $2088
-.fi__00009                     = $2107
+.fi__00009                     = $2104
 .fi__00016                     = $2073
 .in__00015                     = $2073
 .in__00018                     = $2085
@@ -1054,8 +1053,8 @@ screen.lo                      = $0080
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $2000
-segment.default.length         = $9EE6
-segment.default.start          = $211A
+segment.default.length         = $9EE9
+segment.default.start          = $2117
     ; $0000 = __rwdata_end
     ; $0000 = __rwdata_start
     ; $0000 = os_LINZBS
@@ -1590,11 +1589,11 @@ segment.default.start          = $211A
     ; $20CD = __mul_u16u8u16_start
     ; $20D4 = printScore
     ; $20F2 = .do__00005
-    ; $2101 = .el__00008
-    ; $2107 = .fi__00009
-    ; $2119 = .ah__00010
-    ; $211A = segment.default.start
-    ; $9EE6 = segment.default.length
+    ; $20FE = .el__00008
+    ; $2104 = .fi__00009
+    ; $2116 = .ah__00010
+    ; $2117 = segment.default.start
+    ; $9EE9 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi

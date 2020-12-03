@@ -2,111 +2,111 @@
 * = $2000
 main:
 ; 
-;line:36:systemoff-example.mfk
+;line:51:systemoff-example.mfk
 ;     asm { sei }                 // turn off IRQ
     SEI
 ; 
-;line:37:systemoff-example.mfk
-;     antic_nmien = 0             // turn off ANTIC
+;line:52:systemoff-example.mfk
+;     antic_nmien = 0             // turn off NMI
     LDA #0
     STA $D40E
 ; 
-;line:38:systemoff-example.mfk
+;line:53:systemoff-example.mfk
 ;     pia_portb = $fe             // turn off ROM
     LDA #$FE
     STA $D301
 ; 
-;line:39:systemoff-example.mfk
+;line:54:systemoff-example.mfk
 ;     rti = $40                   // set RTI opcode
     LDA #$40
     STA $15
 ; 
-;line:40:systemoff-example.mfk
+;line:55:systemoff-example.mfk
 ;     vbivec = rti.addr           // set address for VBI routine
     LDA #$15
     STA $10
 ; 
-;line:41:systemoff-example.mfk
+;line:56:systemoff-example.mfk
 ;     vdslst = rti.addr           // set address for DLI routine
     STA $16
 ; 
-;line:40:systemoff-example.mfk
+;line:55:systemoff-example.mfk
 ;     vbivec = rti.addr           // set address for VBI routine
     LDA #0
     STA $11
 ; 
-;line:41:systemoff-example.mfk
+;line:56:systemoff-example.mfk
 ;     vdslst = rti.addr           // set address for DLI routine
     STA $17
 ; 
-;line:42:systemoff-example.mfk
+;line:57:systemoff-example.mfk
 ;     os_NMIVEC = nmi.addr        // set address for custom NMI handler
     LDA #lo(nmi)
     STA $FFFA
     LDA #hi(nmi)
     STA $FFFB
 ; 
-;line:43:systemoff-example.mfk
+;line:58:systemoff-example.mfk
 ;     antic_nmien = nmien
     LDA nmien
     STA $D40E
 ; 
-;line:110:systemoff-example.mfk
+;line:125:systemoff-example.mfk
 ;     wait(100)                   // waint 2 sec on PAL for fun
     LDA #$64
     JSR wait
 ; 
-;line:111:systemoff-example.mfk
+;line:126:systemoff-example.mfk
 ;     antic_dlist = dl.addr       // set custom display list
     LDA #lo(dl)
     STA $D402
     LDA #hi(dl)
     STA $D403
 ; 
-;line:112:systemoff-example.mfk
+;line:127:systemoff-example.mfk
 ;     wait(100)                   // waint 2 sec on PAL for the lulz
     LDA #$64
     JSR wait
 ; 
-;line:113:systemoff-example.mfk
+;line:128:systemoff-example.mfk
 ;     vbivec = vbi.addr           // set custom VBI
     LDA #lo(vbi)
     STA $10
     LDA #hi(vbi)
     STA $11
 ; 
-;line:114:systemoff-example.mfk
+;line:129:systemoff-example.mfk
 ;     wait(100)                   // waint 2 sec on PAL because we can
     LDA #$64
     JSR wait
 ; 
-;line:115:systemoff-example.mfk
+;line:130:systemoff-example.mfk
 ;     vdslst = dli_first.addr     // set custom DLI
     LDA #lo(dli_first)
     STA $16
     LDA #hi(dli_first)
     STA $17
 ; 
-;line:117:systemoff-example.mfk
+;line:132:systemoff-example.mfk
 ;     while(true){
 .wh__00001:
 ; 
-;line:118:systemoff-example.mfk
+;line:133:systemoff-example.mfk
 ;       wait(100)
     LDA #$64
     JSR wait
 ; 
-;line:119:systemoff-example.mfk
+;line:134:systemoff-example.mfk
 ;       nmien ^= %10000000        // toggle DLI
     LDA nmien
     EOR #$80
     STA nmien
 ; 
-;line:120:systemoff-example.mfk
+;line:135:systemoff-example.mfk
 ;       antic_nmien = nmien
     STA $D40E
 ; 
-;line:117:systemoff-example.mfk
+;line:132:systemoff-example.mfk
 ;     while(true){
     JMP .wh__00001
 ; 
@@ -115,27 +115,27 @@ main:
 * = $2067
 wait:
 ; 
-;line:93:systemoff-example.mfk
+;line:108:systemoff-example.mfk
 ;     clc
     CLC
 ; 
-;line:94:systemoff-example.mfk
+;line:109:systemoff-example.mfk
 ;     adc os_RTCLOK.b2
     ADC $14
 ; 
-;line:95:systemoff-example.mfk
+;line:110:systemoff-example.mfk
 ;     .rt_check:
 wait$.rt_check:
 ; 
-;line:96:systemoff-example.mfk
+;line:111:systemoff-example.mfk
 ;     cmp os_RTCLOK.b2
     CMP $14
 ; 
-;line:97:systemoff-example.mfk
+;line:112:systemoff-example.mfk
 ;     bne .rt_check
     BNE wait$.rt_check
 ; 
-;line:98:systemoff-example.mfk
+;line:113:systemoff-example.mfk
 ;     rts
     RTS
 ; 
@@ -149,16 +149,16 @@ dli_second:
     TYA 
     PHA 
 ; 
-;line:77:systemoff-example.mfk
+;line:92:systemoff-example.mfk
 ;     gtia_colpf2 = $de
     LDA #$DE
     STA $D018
 ; 
-;line:78:systemoff-example.mfk
+;line:93:systemoff-example.mfk
 ;     antic_wsync = $de
     STA $D40A
 ; 
-;line:79:systemoff-example.mfk
+;line:94:systemoff-example.mfk
 ;     vdslst = dli_first.addr
     LDA #lo(dli_first)
     STA $16
@@ -171,28 +171,28 @@ dli_second:
 ;line
     LDA __reg + 3
 ; 
-;line:79:systemoff-example.mfk
+;line:94:systemoff-example.mfk
 ;     vdslst = dli_first.addr
     STA __reg + 3
 ; 
 ;line
     LDA __reg + 2
 ; 
-;line:79:systemoff-example.mfk
+;line:94:systemoff-example.mfk
 ;     vdslst = dli_first.addr
     STA __reg + 2
 ; 
 ;line
     LDA __reg + 1
 ; 
-;line:79:systemoff-example.mfk
+;line:94:systemoff-example.mfk
 ;     vdslst = dli_first.addr
     STA __reg + 1
 ; 
 ;line
     LDA __reg
 ; 
-;line:79:systemoff-example.mfk
+;line:94:systemoff-example.mfk
 ;     vdslst = dli_first.addr
     STA __reg
     PLA
@@ -207,47 +207,47 @@ dli_second:
 * = $209a
 nmi:
 ; 
-;line:48:systemoff-example.mfk
+;line:63:systemoff-example.mfk
 ;     bit antic_nmist             // test nmist
     BIT $D40F
 ; 
-;line:49:systemoff-example.mfk
+;line:64:systemoff-example.mfk
 ;     bpl .vblclock               // if 7-bit not set handle VBI
     BPL nmi$.vblclock
 ; 
-;line:50:systemoff-example.mfk
+;line:65:systemoff-example.mfk
 ;     jmp (vdslst)                // indirect jump to DLI routine
     JMP (vdslst)
 ; 
-;line:51:systemoff-example.mfk
+;line:66:systemoff-example.mfk
 ;     .vblclock:                  // RTCLOK maintainer
 nmi$.vblclock:
 ; 
-;line:52:systemoff-example.mfk
+;line:67:systemoff-example.mfk
 ;     inc os_RTCLOK.b2
     INC $14
 ; 
-;line:53:systemoff-example.mfk
+;line:68:systemoff-example.mfk
 ;     bne .tickend
     BNE nmi$.tickend
 ; 
-;line:54:systemoff-example.mfk
+;line:69:systemoff-example.mfk
 ;     inc os_RTCLOK.b1
     INC $13
 ; 
-;line:55:systemoff-example.mfk
+;line:70:systemoff-example.mfk
 ;     bne .tickend
     BNE nmi$.tickend
 ; 
-;line:56:systemoff-example.mfk
+;line:71:systemoff-example.mfk
 ;     inc os_RTCLOK.b0
     INC $12
 ; 
-;line:57:systemoff-example.mfk
+;line:72:systemoff-example.mfk
 ;     .tickend:
 nmi$.tickend:
 ; 
-;line:58:systemoff-example.mfk
+;line:73:systemoff-example.mfk
 ;     jmp (vbivec)                // indirect jump to VBI routine
     JMP (vbivec)
 ; 
@@ -256,43 +256,43 @@ nmi$.tickend:
 * = $20af
 dli_first:
 ; 
-;line:63:systemoff-example.mfk
+;line:78:systemoff-example.mfk
 ;     pha
     PHA
 ; 
-;line:64:systemoff-example.mfk
+;line:79:systemoff-example.mfk
 ;     lda #$2a
     LDA #$2A
 ; 
-;line:65:systemoff-example.mfk
+;line:80:systemoff-example.mfk
 ;     sta gtia_colpf2
     STA $D018
 ; 
-;line:66:systemoff-example.mfk
+;line:81:systemoff-example.mfk
 ;     sta antic_wsync
     STA $D40A
 ; 
-;line:67:systemoff-example.mfk
+;line:82:systemoff-example.mfk
 ;     lda #<dli_second.addr
     LDA #lo(dli_second)
 ; 
-;line:68:systemoff-example.mfk
+;line:83:systemoff-example.mfk
 ;     sta vdslst.lo
     STA $16
 ; 
-;line:69:systemoff-example.mfk
+;line:84:systemoff-example.mfk
 ;     lda #>dli_second.addr
     LDA #hi(dli_second)
 ; 
-;line:70:systemoff-example.mfk
+;line:85:systemoff-example.mfk
 ;     sta vdslst.hi
     STA $17
 ; 
-;line:71:systemoff-example.mfk
+;line:86:systemoff-example.mfk
 ;     pla
     PLA
 ; 
-;line:72:systemoff-example.mfk
+;line:87:systemoff-example.mfk
 ;     rti
     RTI
 ; 
@@ -306,7 +306,7 @@ vbi:
     TYA 
     PHA 
 ; 
-;line:103:systemoff-example.mfk
+;line:118:systemoff-example.mfk
 ;     gtia_colpf2 = os_RTCLOK.b2
     LDA $14
     STA $D018

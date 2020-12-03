@@ -8,7 +8,7 @@ main:
 ; 
 ;line:9:sieve1899.mfk
 ;     .rt_check:
-.ai__00032pause$.rt_check:
+.ai__00031pause$.rt_check:
 ; 
 ;line:10:sieve1899.mfk
 ;     cmp $14
@@ -16,7 +16,7 @@ main:
 ; 
 ;line:11:sieve1899.mfk
 ;     beq .rt_check
-    BEQ .ai__00032pause$.rt_check
+    BEQ .ai__00031pause$.rt_check
 ; 
 ;line:41:sieve1899.mfk
 ;     RTCLOK = 0
@@ -39,40 +39,27 @@ main:
 ; 
 ;line:47:sieve1899.mfk
 ;       for i:flags {
-    STA $E0
-    STA $E1
-.do__00013:
-; 
-;line:48:sieve1899.mfk
-;         flags[i] = true
-    LDY $E0
-    LDA $E1
-    CLC
-    ADC #hi(main$flags.array)
-    STA __reg + 1
-    LDA #0
     STA __reg
+    LDA #hi(main$flags.array)
+    STA __reg + 1
     LDA #1
+    LDX #$20
+.ms__00013:
+    LDY #0
+.ms__00015:
     STA (__reg), Y
-; 
-;line:47:sieve1899.mfk
-;       for i:flags {
-    INC $E0
-    BNE .in__00016
-    INC $E1
-.in__00016:
-    LDA $E0
-    BNE .do__00013
-    LDA $E1
-    CMP #$20
-    BNE .do__00013
+    INY
+    BNE .ms__00015
+    INC __reg + 1
+    DEX
+    BNE .ms__00013
 ; 
 ;line:51:sieve1899.mfk
 ;       for i:flags {
-    LDA #0
+    TXA
     STA $E0
     STA $E1
-.do__00017:
+.do__00016:
 ; 
 ;line:52:sieve1899.mfk
 ;         if flags[i] {
@@ -84,7 +71,7 @@ main:
     LDA #0
     STA __reg
     LDA (__reg), Y
-    BEQ .fi__00026
+    BEQ .fi__00025
 ; 
 ;line:53:sieve1899.mfk
 ;           prime = (i * 2) + 3
@@ -114,8 +101,8 @@ main:
 ; 
 ;line:55:sieve1899.mfk
 ;           while k <= size {
-    JMP .he__00021
-.wh__00020:
+    JMP .he__00020
+.wh__00019:
 ; 
 ;line:56:sieve1899.mfk
 ;             flags[k] = false
@@ -140,37 +127,37 @@ main:
 ; 
 ;line:55:sieve1899.mfk
 ;           while k <= size {
-.he__00021:
+.he__00020:
     LDA #$20
     CMP $E5
-    BCC .cp__00024
-    BNE .wh__00020
+    BCC .cp__00023
+    BNE .wh__00019
     LDA $E4
-    BEQ .wh__00020
-.cp__00024:
+    BEQ .wh__00019
+.cp__00023:
 ; 
 ;line:59:sieve1899.mfk
 ;           count += 1
     INC $E6
-    BNE .in__00025
+    BNE .in__00024
     INC $E7
-.in__00025:
+.in__00024:
 ; 
 ;line:52:sieve1899.mfk
 ;         if flags[i] {
-.fi__00026:
+.fi__00025:
 ; 
 ;line:51:sieve1899.mfk
 ;       for i:flags {
     INC $E0
-    BNE .in__00027
+    BNE .in__00026
     INC $E1
-.in__00027:
+.in__00026:
     LDA $E0
-    BNE .do__00017
+    BNE .do__00016
     LDA $E1
     CMP #$20
-    BNE .do__00017
+    BNE .do__00016
 ; 
 ;line:43:sieve1899.mfk
 ;     for iter,9,downto,0 {
@@ -185,20 +172,6 @@ main:
 ; 
 ;line
 .lj80000:
-; 
-;line:65:sieve1899.mfk
-;     printScore()
-    JSR printScore
-; 
-;line:67:sieve1899.mfk
-;     while true {}
-.wh__00028:
-    JMP .wh__00028
-; 
-;line
- 
-* = $20c4
-printScore:
 ; 
 ;line:20:sieve1899.mfk
 ;     screen = SAVMSC
@@ -240,23 +213,22 @@ printScore:
 ;line:27:sieve1899.mfk
 ;     for iter:tmp {
     LDY #0
-.do__00005:
+.ai__00032.do__00005:
 ; 
 ;line:28:sieve1899.mfk
 ;       if tmp[iter] < 10 {
     LDA printScore$tmp.array, Y
     CMP #$A
-    BCS .el__00008
+    BCS .ai__00032.el__00008
 ; 
 ;line:29:sieve1899.mfk
 ;         screen[iter] = tmp[iter] + $10
-    LDA printScore$tmp.array, Y
     ADC #$10
 ; 
 ;line:28:sieve1899.mfk
 ;       if tmp[iter] < 10 {
-    JMP .fi__00009
-.el__00008:
+    JMP .ai__00032.fi__00009
+.ai__00032.el__00008:
 ; 
 ;line:31:sieve1899.mfk
 ;         screen[iter] = tmp[iter] + $17
@@ -266,7 +238,7 @@ printScore:
 ; 
 ;line:28:sieve1899.mfk
 ;       if tmp[iter] < 10 {
-.fi__00009:
+.ai__00032.fi__00009:
 ; 
 ;line:29:sieve1899.mfk
 ;         screen[iter] = tmp[iter] + $10
@@ -276,29 +248,30 @@ printScore:
 ;     for iter:tmp {
     INY
     CPY #4
-    BNE .do__00005
-    ; DISCARD_AF
-    ; DISCARD_XF
-    ; DISCARD_YF
-    RTS
+    BNE .ai__00032.do__00005
+; 
+;line:67:sieve1899.mfk
+;     while true {}
+.wh__00027:
+    BEQ .wh__00027
 ; 
 ;line
-.ai__00032pause$.rt_check      = $2002
-.cp__00024                     = $20A1
-.do__00005                     = $20EA
+.ai__00031pause$.rt_check      = $2002
+.ai__00032.do__00005           = $20D4
+.ai__00032.el__00008           = $20E0
+.ai__00032.fi__00009           = $20E6
+.cp__00023                     = $2091
 .do__00010                     = $2010
-.do__00013                     = $201C
-.do__00017                     = $2043
-.el__00008                     = $20F9
-.fi__00009                     = $20FF
-.fi__00026                     = $20A7
-.he__00021                     = $2095
-.in__00016                     = $2033
-.in__00025                     = $20A7
-.in__00027                     = $20AD
-.lj80000                       = $20BE
-.wh__00020                     = $2079
-.wh__00028                     = $20C1
+.do__00016                     = $2033
+.fi__00025                     = $2097
+.he__00020                     = $2085
+.in__00024                     = $2097
+.in__00026                     = $209D
+.lj80000                       = $20AE
+.ms__00013                     = $2022
+.ms__00015                     = $2024
+.wh__00019                     = $2069
+.wh__00027                     = $20ED
 RTCLOK                         = $0013
 RTCLOK.hi                      = $0014
 RTCLOK.lo                      = $0013
@@ -957,7 +930,6 @@ pokey_unuse3                   = $D20C
 prime                          = $00E2
 prime.hi                       = $00E3
 prime.lo                       = $00E2
-printScore                     = $20C4
 printScore$iter                = $0085
 printScore$tmp.array           = $0086
 reset_routine_addr             = $FFFC
@@ -969,8 +941,8 @@ screen.lo                      = $00E8
 segment.default.bank           = $0000
 segment.default.end            = $BFFF
 segment.default.heapstart      = $4400
-segment.default.length         = $9EF9
-segment.default.start          = $2107
+segment.default.length         = $9F11
+segment.default.start          = $20EF
     ; $0000 = __rwdata_end
     ; $0000 = __rwdata_start
     ; $0000 = os_LINZBS
@@ -1487,28 +1459,27 @@ segment.default.start          = $2107
     ; $0580 = os_LBUFF
     ; $0700 = os_INIML
     ; $2000 = main
-    ; $2002 = .ai__00032pause$.rt_check
+    ; $2002 = .ai__00031pause$.rt_check
     ; $2010 = .do__00010
-    ; $201C = .do__00013
-    ; $2033 = .in__00016
-    ; $2043 = .do__00017
-    ; $2079 = .wh__00020
-    ; $2095 = .he__00021
-    ; $20A1 = .cp__00024
-    ; $20A7 = .fi__00026
-    ; $20A7 = .in__00025
-    ; $20AD = .in__00027
-    ; $20BE = .lj80000
-    ; $20C1 = .wh__00028
-    ; $20C4 = printScore
-    ; $20EA = .do__00005
-    ; $20F9 = .el__00008
-    ; $20FF = .fi__00009
-    ; $2107 = segment.default.start
+    ; $2022 = .ms__00013
+    ; $2024 = .ms__00015
+    ; $2033 = .do__00016
+    ; $2069 = .wh__00019
+    ; $2085 = .he__00020
+    ; $2091 = .cp__00023
+    ; $2097 = .fi__00025
+    ; $2097 = .in__00024
+    ; $209D = .in__00026
+    ; $20AE = .lj80000
+    ; $20D4 = .ai__00032.do__00005
+    ; $20E0 = .ai__00032.el__00008
+    ; $20E6 = .ai__00032.fi__00009
+    ; $20ED = .wh__00027
+    ; $20EF = segment.default.start
     ; $2400 = main$flags.array
     ; $4400 = __heap_start
     ; $4400 = segment.default.heapstart
-    ; $9EF9 = segment.default.length
+    ; $9F11 = segment.default.length
     ; $BFFA = os_CARTCS
     ; $BFFA = os_CARTCS.lo
     ; $BFFB = os_CARTCS.hi

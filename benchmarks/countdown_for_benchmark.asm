@@ -2,7 +2,7 @@
 * = $2000
 main:
 ; 
-;line:69:countdown_for_benchmark.mfk
+;line:68:countdown_for_benchmark.mfk
 ;     copy_block($e080,$4000,80)
     LDA #$80
     STA copy_block$src
@@ -49,7 +49,7 @@ main:
     LDA #$40
     STA $D40E
 ; 
-;line:71:countdown_for_benchmark.mfk
+;line:70:countdown_for_benchmark.mfk
 ;     set_block($20,40,255)
     LDA #$20
     STA set_block$from
@@ -62,7 +62,7 @@ main:
     STA set_block$val
     JSR set_block
 ; 
-;line:72:countdown_for_benchmark.mfk
+;line:71:countdown_for_benchmark.mfk
 ;     set_block($20,5,0)
     LDA #$20
     STA set_block$from
@@ -74,7 +74,7 @@ main:
     STA set_block$val
     JSR set_block
 ; 
-;line:73:countdown_for_benchmark.mfk
+;line:72:countdown_for_benchmark.mfk
 ;     set_block($41,7,0)
     LDA #$41
     STA set_block$from
@@ -102,66 +102,66 @@ main:
 ;     beq .rt_check
     BEQ .ai__00046pause$.rt_check
 ; 
-;line:76:countdown_for_benchmark.mfk
+;line:75:countdown_for_benchmark.mfk
 ;     antic_chbase = $40
     LDA #$40
     STA $D409
 ; 
-;line:77:countdown_for_benchmark.mfk
+;line:76:countdown_for_benchmark.mfk
 ;     antic_dlist = dl.addr
     LDA #lo(dl)
     STA $D402
     LDA #hi(dl)
     STA $D403
 ; 
-;line:79:countdown_for_benchmark.mfk
+;line:78:countdown_for_benchmark.mfk
 ;     run_counter = true
     LDA #1
     STA 4
 ; 
-;line:81:countdown_for_benchmark.mfk
+;line:80:countdown_for_benchmark.mfk
 ;     for zpc_6,1,downto,0{
     LDA #2
     STA $41
 .do__00020:
     DEC $41
 ; 
-;line:82:countdown_for_benchmark.mfk
+;line:81:countdown_for_benchmark.mfk
 ;       for zpc_5,9,downto,0{
     LDA #$A
     STA $42
 .do__00023:
     DEC $42
 ; 
-;line:83:countdown_for_benchmark.mfk
+;line:82:countdown_for_benchmark.mfk
 ;         for zpc_4,9,downto,0{
     LDA #$A
     STA $43
 .do__00026:
     DEC $43
 ; 
-;line:84:countdown_for_benchmark.mfk
+;line:83:countdown_for_benchmark.mfk
 ;           for zpc_3,9,downto,0{
     LDA #$A
     STA $44
 .do__00029:
     DEC $44
 ; 
-;line:85:countdown_for_benchmark.mfk
+;line:84:countdown_for_benchmark.mfk
 ;             for zpc_2,9,downto,0{
     LDA #$A
     STA $45
 .do__00032:
     DEC $45
 ; 
-;line:86:countdown_for_benchmark.mfk
+;line:85:countdown_for_benchmark.mfk
 ;               for zpc_1,9,downto,0{
     LDA #$A
     STA $46
 .do__00035:
     DEC $46
 ; 
-;line:87:countdown_for_benchmark.mfk
+;line:86:countdown_for_benchmark.mfk
 ;                 for zpc_0,9,downto,0{
     LDA #$A
     STA $47
@@ -169,41 +169,41 @@ main:
     DEC $47
     BNE .do__00038
 ; 
-;line:86:countdown_for_benchmark.mfk
+;line:85:countdown_for_benchmark.mfk
 ;               for zpc_1,9,downto,0{
     LDA $46
     BNE .do__00035
 ; 
-;line:85:countdown_for_benchmark.mfk
+;line:84:countdown_for_benchmark.mfk
 ;             for zpc_2,9,downto,0{
     LDA $45
     BNE .do__00032
 ; 
-;line:84:countdown_for_benchmark.mfk
+;line:83:countdown_for_benchmark.mfk
 ;           for zpc_3,9,downto,0{
     LDA $44
     BNE .do__00029
 ; 
-;line:83:countdown_for_benchmark.mfk
+;line:82:countdown_for_benchmark.mfk
 ;         for zpc_4,9,downto,0{
     LDA $43
     BNE .do__00026
 ; 
-;line:82:countdown_for_benchmark.mfk
+;line:81:countdown_for_benchmark.mfk
 ;       for zpc_5,9,downto,0{
     LDA $42
     BNE .do__00023
 ; 
-;line:81:countdown_for_benchmark.mfk
+;line:80:countdown_for_benchmark.mfk
 ;     for zpc_6,1,downto,0{
     LDA $41
     BNE .do__00020
 ; 
-;line:96:countdown_for_benchmark.mfk
+;line:95:countdown_for_benchmark.mfk
 ;     run_counter = false
     STA 4
 ; 
-;line:98:countdown_for_benchmark.mfk
+;line:97:countdown_for_benchmark.mfk
 ;     while true {}
 .wh__00041:
     BEQ .wh__00041
@@ -213,14 +213,14 @@ main:
 * = $20d5
 copy_block:
 ; 
-;line:57:countdown_for_benchmark.mfk
+;line:56:countdown_for_benchmark.mfk
 ;     for iter0W,0,to,size-1{
     LDA #0
     STA 2
     STA 3
 .wh__00006:
 ; 
-;line:58:countdown_for_benchmark.mfk
+;line:57:countdown_for_benchmark.mfk
 ;       dsc[iter0W] = src[iter0W]
     LDY 2
     LDA 3
@@ -240,7 +240,7 @@ copy_block:
     PLA
     STA (__reg), Y
 ; 
-;line:57:countdown_for_benchmark.mfk
+;line:56:countdown_for_benchmark.mfk
 ;     for iter0W,0,to,size-1{
     SEC
     LDA copy_block$size
@@ -271,14 +271,14 @@ copy_block:
 * = $2119
 set_block:
 ; 
-;line:63:countdown_for_benchmark.mfk
+;line:62:countdown_for_benchmark.mfk
 ;     for iter0W,0,to,size-1{
     LDA #0
     STA 2
     STA 3
 .wh__00013:
 ; 
-;line:64:countdown_for_benchmark.mfk
+;line:63:countdown_for_benchmark.mfk
 ;       from[iter0W] = val
     LDY 2
     LDA 3
@@ -290,7 +290,7 @@ set_block:
     LDA set_block$val
     STA (__reg), Y
 ; 
-;line:63:countdown_for_benchmark.mfk
+;line:62:countdown_for_benchmark.mfk
 ;     for iter0W,0,to,size-1{
     SEC
     LDA set_block$size
@@ -327,95 +327,95 @@ vbi:
     PHA 
 ; 
 ;line:33:countdown_for_benchmark.mfk
-;     asm { inc RTCLOK }
+;     RTCLOK += 1
     INC 0
 ; 
-;line:35:countdown_for_benchmark.mfk
+;line:34:countdown_for_benchmark.mfk
 ;     if run_counter{
     LDA 4
     BEQ .fi__00005
 ; 
-;line:36:countdown_for_benchmark.mfk
+;line:35:countdown_for_benchmark.mfk
 ;       zpr_0 += 1
     INC $24
 ; 
-;line:37:countdown_for_benchmark.mfk
+;line:36:countdown_for_benchmark.mfk
 ;       if zpr_0 == 10 {
     LDA $24
     CMP #$A
     BNE .fi__00001
 ; 
-;line:38:countdown_for_benchmark.mfk
+;line:37:countdown_for_benchmark.mfk
 ;         zpr_1 += 1
     INC $23
 ; 
-;line:39:countdown_for_benchmark.mfk
+;line:38:countdown_for_benchmark.mfk
 ;         zpr_0 = 0
     LDA #0
     STA $24
 ; 
-;line:37:countdown_for_benchmark.mfk
+;line:36:countdown_for_benchmark.mfk
 ;       if zpr_0 == 10 {
 .fi__00001:
 ; 
-;line:41:countdown_for_benchmark.mfk
+;line:40:countdown_for_benchmark.mfk
 ;       if zpr_1 == 10 {
     LDA $23
     CMP #$A
     BNE .fi__00002
 ; 
-;line:42:countdown_for_benchmark.mfk
+;line:41:countdown_for_benchmark.mfk
 ;         zpr_2 += 1
     INC $22
 ; 
-;line:43:countdown_for_benchmark.mfk
+;line:42:countdown_for_benchmark.mfk
 ;         zpr_1 = 0
     LDA #0
     STA $23
 ; 
-;line:41:countdown_for_benchmark.mfk
+;line:40:countdown_for_benchmark.mfk
 ;       if zpr_1 == 10 {
 .fi__00002:
 ; 
-;line:45:countdown_for_benchmark.mfk
+;line:44:countdown_for_benchmark.mfk
 ;       if zpr_2 == 10 {
     LDA $22
     CMP #$A
     BNE .fi__00003
 ; 
-;line:46:countdown_for_benchmark.mfk
+;line:45:countdown_for_benchmark.mfk
 ;         zpr_3 += 1
     INC $21
 ; 
-;line:47:countdown_for_benchmark.mfk
+;line:46:countdown_for_benchmark.mfk
 ;         zpr_2 = 0
     LDA #0
     STA $22
 ; 
-;line:45:countdown_for_benchmark.mfk
+;line:44:countdown_for_benchmark.mfk
 ;       if zpr_2 == 10 {
 .fi__00003:
 ; 
-;line:49:countdown_for_benchmark.mfk
+;line:48:countdown_for_benchmark.mfk
 ;       if zpr_3 == 10 {
     LDA $21
     CMP #$A
     BNE .fi__00004
 ; 
-;line:50:countdown_for_benchmark.mfk
+;line:49:countdown_for_benchmark.mfk
 ;         zpr_4 += 1
     INC $20
 ; 
-;line:51:countdown_for_benchmark.mfk
+;line:50:countdown_for_benchmark.mfk
 ;         zpr_3 = 0
     LDA #0
     STA $21
 ; 
-;line:49:countdown_for_benchmark.mfk
+;line:48:countdown_for_benchmark.mfk
 ;       if zpr_3 == 10 {
 .fi__00004:
 ; 
-;line:35:countdown_for_benchmark.mfk
+;line:34:countdown_for_benchmark.mfk
 ;     if run_counter{
 .fi__00005:
     ; DISCARD_AF
@@ -425,28 +425,28 @@ vbi:
 ;line
     LDA __reg + 3
 ; 
-;line:35:countdown_for_benchmark.mfk
+;line:34:countdown_for_benchmark.mfk
 ;     if run_counter{
     STA __reg + 3
 ; 
 ;line
     LDA __reg + 2
 ; 
-;line:35:countdown_for_benchmark.mfk
+;line:34:countdown_for_benchmark.mfk
 ;     if run_counter{
     STA __reg + 2
 ; 
 ;line
     LDA __reg + 1
 ; 
-;line:35:countdown_for_benchmark.mfk
+;line:34:countdown_for_benchmark.mfk
 ;     if run_counter{
     STA __reg + 1
 ; 
 ;line
     LDA __reg
 ; 
-;line:35:countdown_for_benchmark.mfk
+;line:34:countdown_for_benchmark.mfk
 ;     if run_counter{
     STA __reg
     PLA
